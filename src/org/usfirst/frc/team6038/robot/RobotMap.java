@@ -6,4 +6,5 @@ public class RobotMap {
 	public static int motor_br = 4;
 	public static int motor_bl = 2;
 	public static int gyro = 0;
+	public static int breakbeamChannel = 1;
 }

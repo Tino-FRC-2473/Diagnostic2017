@@ -2,11 +2,13 @@ package org.usfirst.frc.team6038.robot;
 
 import org.usfirst.frc.team2473.robot.ThreadingRobot;
 import org.usfirst.frc.team6038.robot.commands.MotorTest;
+import org.usfirst.frc.team6038.robot.subsystems.BreakbeamSystem;
 import org.usfirst.frc.team6038.robot.subsystems.DriveTrain;
 
 public class Robot extends ThreadingRobot {
 
 	public static DriveTrain train;
+	public static BreakbeamSystem beam;
 	MotorTest test;
 
 	@Override
@@ -14,6 +16,7 @@ public class Robot extends ThreadingRobot {
 		setNetworking(false);
 		train = new DriveTrain(this);
 		test = new MotorTest();
+		beam = new BreakbeamSystem();
 		super.robotInit();
 	}
 
@@ -24,7 +27,7 @@ public class Robot extends ThreadingRobot {
 		addDeviceCall("motor_br", () -> train.getEncPosition("br"));
 		addDeviceCall("motor_bl", () -> train.getEncPosition("bl"));
 	}
-	
+
 	@Override
 	public void teleopPeriodic() {
 		System.out.println("teleop running");
