@@ -12,7 +12,11 @@ public class BreakbeamSystem extends Subsystem {
 
 	}
 
-	public boolean getBreakbeamValue() {
-		return breakBeam.get();
+	public double getBreakbeamValue() {
+		if(breakBeam.get()) {
+			return 0;
+		} else {
+			return 1;
+		}
 	}
 }

@@ -66,4 +66,18 @@ public class DriveTrain extends Subsystem {
 		System.out.println("Encoder difference: " + returner);
 		return returner;
 	}	
+	
+	public void turnLeft(double pow) {
+		motor_fr.set(pow);
+		motor_fl.set(-pow);
+		motor_br.set(pow);
+		motor_bl.set(-pow);
+	}
+
+	public void turnRight(double pow) {
+		motor_fr.set(-pow);
+		motor_fl.set(pow);
+		motor_br.set(-pow);
+		motor_bl.set(pow);
+	}
 }
