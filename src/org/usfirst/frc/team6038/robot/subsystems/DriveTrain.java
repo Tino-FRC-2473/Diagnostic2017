@@ -69,15 +69,22 @@ public class DriveTrain extends Subsystem {
 	
 	public void turnLeft(double pow) {
 		motor_fr.set(pow);
-		motor_fl.set(-pow);
+		motor_fl.set(pow);
 		motor_br.set(pow);
-		motor_bl.set(-pow);
+		motor_bl.set(pow);
 	}
 
 	public void turnRight(double pow) {
 		motor_fr.set(-pow);
-		motor_fl.set(pow);
+		motor_fl.set(-pow);
 		motor_br.set(-pow);
-		motor_bl.set(pow);
+		motor_bl.set(-pow);
+	}
+	
+	public void stop() {
+		motor_fr.set(0);
+		motor_fl.set(0);
+		motor_br.set(0);
+		motor_bl.set(0);
 	}
 }

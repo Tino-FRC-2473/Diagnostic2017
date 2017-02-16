@@ -8,7 +8,7 @@ import org.usfirst.frc.team6038.robot.subsystems.BreakbeamSystem;
 import org.usfirst.frc.team6038.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6038.robot.subsystems.GyroSystem;
 
-public class Robot extends ThreadingRobot {
+public class Robot extends ThreadingRobot {  
 
 	public static DriveTrain train;
 	public static BreakbeamSystem beam;
@@ -16,16 +16,17 @@ public class Robot extends ThreadingRobot {
 	MotorTest motor_test;
 	BreakbeamTest break_test;
 	GyroTest gyro_test;
-	final String mode = "motor";
+	final String mode = "gyro";
 
 	@Override
 	public void robotInit() {
 		setNetworking(false);
 		train = new DriveTrain(this);
+		beam = new BreakbeamSystem();
+		gyroSystem = new GyroSystem();
 		motor_test = new MotorTest();
 		break_test = new BreakbeamTest();
 		gyro_test = new GyroTest(this);
-		beam = new BreakbeamSystem();
 		super.robotInit();
 	}
 
@@ -41,21 +42,18 @@ public class Robot extends ThreadingRobot {
 
 	@Override
 	public void teleopPeriodic() {		
-		startTest();
-		super.runTeleop();
-	}
-	
-	public void startTest() {
 		switch(mode) {
 		case "motor":
 			motor_test.start();
 			break;
-		case "breakbream":
+		case "breakbeam":
 			break_test.start();
 			break;
 		case "gyro":
 			gyro_test.start();
 			break;
 		}		
+		super.runTeleop();
 	}
+	
 }
