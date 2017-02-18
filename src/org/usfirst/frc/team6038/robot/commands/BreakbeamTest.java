@@ -19,14 +19,14 @@ public class BreakbeamTest extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if(!isFinished()) {			
+		if (!isFinished()) {
 			System.out.println("Waiting...");
 		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if(Robot.beam.getBreakbeamValue() == 2) {
+		if (Robot.beam.getBreakbeamValue() == 2) {
 			return true;
 		} else {
 			return false;
