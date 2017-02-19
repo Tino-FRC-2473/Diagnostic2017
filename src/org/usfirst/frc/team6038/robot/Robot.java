@@ -8,7 +8,7 @@ import org.usfirst.frc.team6038.robot.subsystems.BreakbeamSystem;
 import org.usfirst.frc.team6038.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6038.robot.subsystems.GyroSystem;
 
-public class Robot extends ThreadingRobot {  //using the ThreadingRobot framework
+public class Robot extends ThreadingRobot {
 
 	public static DriveTrain train; //drivetrain subsystem
 	public static BreakbeamSystem beam; //breakbeam subsystem
@@ -49,7 +49,7 @@ public class Robot extends ThreadingRobot {  //using the ThreadingRobot framewor
 	@Override
 	public void teleopPeriodic() {		
 		//the following switch statement starts the correct command based on the value of the String mode
-		switch(mode) {
+		switch (mode) {
 		case "motor":
 			motor_test.start();
 			break;
@@ -59,7 +59,15 @@ public class Robot extends ThreadingRobot {  //using the ThreadingRobot framewor
 		case "gyro":
 			gyro_test.start();
 			break;
-		}		
+		}
 		super.runTeleop();
+	}
+
+	@Override
+	public void resetEncoders() {
+		train.motor_fr.setEncPosition(0);
+		train.motor_fl.setEncPosition(0);
+		train.motor_br.setEncPosition(0);
+		train.motor_bl.setEncPosition(0);
 	}
 }
