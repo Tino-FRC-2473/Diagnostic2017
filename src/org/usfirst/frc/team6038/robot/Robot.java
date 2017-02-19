@@ -8,40 +8,47 @@ import org.usfirst.frc.team6038.robot.subsystems.BreakbeamSystem;
 import org.usfirst.frc.team6038.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6038.robot.subsystems.GyroSystem;
 
-public class Robot extends ThreadingRobot {  
+public class Robot extends ThreadingRobot {  //using the ThreadingRobot framework
 
-	public static DriveTrain train;
-	public static BreakbeamSystem beam;
-	public static GyroSystem gyroSystem;
-	MotorTest motor_test;
-	BreakbeamTest break_test;
-	GyroTest gyro_test;
-	final String mode = "gyro";
+	public static DriveTrain train; //drivetrain subsystem
+	public static BreakbeamSystem beam; //breakbeam subsystem
+	public static GyroSystem gyroSystem; //gyro subsystem
+	MotorTest motor_test; //this command is run to test the motors
+	BreakbeamTest break_test; //this command is run to test the break beams
+	GyroTest gyro_test; //this command is run to test the gyroscope
+	final String mode = "gyro"; //this string is for testing purposes, and represents which of the tests are running
+	/*
+	 * Here are all of the possible tests and their representative Strings:
+	 * "gyro" --> gyro_test
+	 * "breakbeam" --> break_test
+	 * "motor" --> motor_test
+	 * */
 
 	@Override
 	public void robotInit() {
-		setNetworking(false);
-		train = new DriveTrain(this);
-		beam = new BreakbeamSystem();
-		gyroSystem = new GyroSystem();
-		motor_test = new MotorTest();
-		break_test = new BreakbeamTest();
-		gyro_test = new GyroTest(this);
-		super.robotInit();
+		setNetworking(false); //no networking is being run for this code
+		train = new DriveTrain(this); //creation of the drivetrain subsystem object
+		beam = new BreakbeamSystem(); //creation of the breakbeam subsystem object
+		gyroSystem = new GyroSystem(); //creation of the gyro subsystem object
+		motor_test = new MotorTest(); //creation of the motor test command object
+		break_test = new BreakbeamTest(); //creation of the breakbeam test command object
+		gyro_test = new GyroTest(this); //creation of the gyro test command object
+		super.robotInit(); //run super.robotInit() for extended ThreadingRobot framework features
 	}
 
 	@Override
 	public void updateDeviceCalls() {
-		addDeviceCall("motor_fr", () -> train.getEncPosition("fr"));
-		addDeviceCall("motor_fl", () -> train.getEncPosition("fl"));
-		addDeviceCall("motor_br", () -> train.getEncPosition("br"));
-		addDeviceCall("motor_bl", () -> train.getEncPosition("bl"));
-		addDeviceCall("gyro", () -> gyroSystem.getValue());
-		addDeviceCall("beam", () -> beam.getBreakbeamValue());
+		addDeviceCall("motor_fr", () -> train.getEncPosition("fr")); //add listener for motor motor_fr's encoder position with reference name "motor_fr"
+		addDeviceCall("motor_fl", () -> train.getEncPosition("fl")); //add listener for motor motor_fl's encoder position with reference name "motor_fl"
+		addDeviceCall("motor_br", () -> train.getEncPosition("br")); //add listener for motor motor_br's encoder position with reference name "motor_br"
+		addDeviceCall("motor_bl", () -> train.getEncPosition("bl")); //add listener for motor motor_bl's encoder position with reference name "motor_fl"
+		addDeviceCall("gyro", () -> gyroSystem.getValue()); //add listener for AnalogGyro gyro's heading with reference name "gyro"
+		addDeviceCall("beam", () -> beam.getBreakbeamValue()); //add listener for the breakbeam object's value with reference name "beam"
 	}
 
 	@Override
 	public void teleopPeriodic() {		
+		//the following switch statement starts the correct command based on the value of the String mode
 		switch(mode) {
 		case "motor":
 			motor_test.start();
@@ -55,5 +62,4 @@ public class Robot extends ThreadingRobot {
 		}		
 		super.runTeleop();
 	}
-	
 }
