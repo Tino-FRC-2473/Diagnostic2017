@@ -16,19 +16,17 @@ public class Climber extends Subsystem {
 	private CANTalon ropeMotor2;
 
 	public Climber() {
+		System.out.println("Init motors");
 		ropeMotor1 = new CANTalon(RobotMap.ropeMotor1);
 		ropeMotor2 = new CANTalon(RobotMap.ropeMotor2);
 	}
 
 	public void initDefaultCommand() {
-
+		
 	}
 
 	public void climb(double value) {
-		ropeMotor1.changeControlMode(TalonControlMode.PercentVbus);
 		ropeMotor1.set(value);
-
-		ropeMotor2.changeControlMode(TalonControlMode.PercentVbus);
 		ropeMotor2.set(value);
 	}
 

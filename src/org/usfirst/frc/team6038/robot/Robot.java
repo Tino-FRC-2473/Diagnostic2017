@@ -20,7 +20,7 @@ public class Robot extends ThreadingRobot {
 	BreakbeamTest break_test; //this command is run to test the break beams
 	GyroTest gyro_test; //this command is run to test the gyroscope
 	ClimberTest climber_test;
-	final String mode = "gyro"; //this string is for testing purposes, and represents which of the tests are running
+	final String mode = "climber"; //this string is for testing purposes, and represents which of the tests are running
 	/*
 	 * Here are all of the possible tests and their representative Strings:
 	 * "gyro" --> gyro_test
@@ -31,14 +31,14 @@ public class Robot extends ThreadingRobot {
 	@Override
 	public void robotInit() {
 		setNetworking(false); //no networking is being run for this code
+		climber = new Climber(); //creation of climber subsystem object
 		train = new DriveTrain(this); //creation of the drivetrain subsystem object
 		beam = new BreakbeamSystem(); //creation of the breakbeam subsystem object
-		climber = new Climber(); //creation of climber subsystem object
 		gyroSystem = new GyroSystem(); //creation of the gyro subsystem object
+		climber_test = new ClimberTest(this);
 		motor_test = new MotorTest(); //creation of the motor test command object
 		break_test = new BreakbeamTest(); //creation of the breakbeam test command object
 		gyro_test = new GyroTest(this); //creation of the gyro test command object
-		climber_test = new ClimberTest();
 		super.robotInit(); //run super.robotInit() for extended ThreadingRobot framework features
 	}
 
