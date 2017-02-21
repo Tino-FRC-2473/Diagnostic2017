@@ -2,9 +2,11 @@ package org.usfirst.frc.team6038.robot;
 
 import org.usfirst.frc.team2473.robot.ThreadingRobot;
 import org.usfirst.frc.team6038.robot.commands.BreakbeamTest;
+import org.usfirst.frc.team6038.robot.commands.ClimberTest;
 import org.usfirst.frc.team6038.robot.commands.GyroTest;
 import org.usfirst.frc.team6038.robot.commands.MotorTest;
 import org.usfirst.frc.team6038.robot.subsystems.BreakbeamSystem;
+import org.usfirst.frc.team6038.robot.subsystems.Climber;
 import org.usfirst.frc.team6038.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6038.robot.subsystems.GyroSystem;
 
@@ -13,9 +15,11 @@ public class Robot extends ThreadingRobot {
 	public static DriveTrain train; //drivetrain subsystem
 	public static BreakbeamSystem beam; //breakbeam subsystem
 	public static GyroSystem gyroSystem; //gyro subsystem
+	public static Climber climber; //climber subsystem
 	MotorTest motor_test; //this command is run to test the motors
 	BreakbeamTest break_test; //this command is run to test the break beams
 	GyroTest gyro_test; //this command is run to test the gyroscope
+	ClimberTest climber_test;
 	final String mode = "gyro"; //this string is for testing purposes, and represents which of the tests are running
 	/*
 	 * Here are all of the possible tests and their representative Strings:
@@ -29,10 +33,12 @@ public class Robot extends ThreadingRobot {
 		setNetworking(false); //no networking is being run for this code
 		train = new DriveTrain(this); //creation of the drivetrain subsystem object
 		beam = new BreakbeamSystem(); //creation of the breakbeam subsystem object
+		climber = new Climber(); //creation of climber subsystem object
 		gyroSystem = new GyroSystem(); //creation of the gyro subsystem object
 		motor_test = new MotorTest(); //creation of the motor test command object
 		break_test = new BreakbeamTest(); //creation of the breakbeam test command object
 		gyro_test = new GyroTest(this); //creation of the gyro test command object
+		climber_test = new ClimberTest();
 		super.robotInit(); //run super.robotInit() for extended ThreadingRobot framework features
 	}
 
@@ -44,6 +50,7 @@ public class Robot extends ThreadingRobot {
 		addDeviceCall("motor_bl", () -> train.getEncPosition("bl")); //add listener for motor motor_bl's encoder position with reference name "motor_fl"
 		addDeviceCall("gyro", () -> gyroSystem.getValue()); //add listener for AnalogGyro gyro's heading with reference name "gyro"
 		addDeviceCall("beam", () -> beam.getBreakbeamValue()); //add listener for the breakbeam object's value with reference name "beam"
+		addDeviceCall("climber", () -> climber.getCurrent());
 	}
 
 	@Override
@@ -59,6 +66,8 @@ public class Robot extends ThreadingRobot {
 		case "gyro":
 			gyro_test.start();
 			break;
+		case "climber":
+			climber_test.start();
 		}
 		super.runTeleop();
 	}
