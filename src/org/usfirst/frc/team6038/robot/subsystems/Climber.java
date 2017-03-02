@@ -3,7 +3,6 @@ package org.usfirst.frc.team6038.robot.subsystems;
 import org.usfirst.frc.team6038.robot.RobotMap;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -22,7 +21,7 @@ public class Climber extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		
+
 	}
 
 	public void climb(double value) {
