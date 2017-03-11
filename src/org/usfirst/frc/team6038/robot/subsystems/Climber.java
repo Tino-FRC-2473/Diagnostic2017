@@ -37,11 +37,11 @@ public class Climber extends Subsystem {
 		}
 	}
 	
-	public void runIndividual(int num) {
+	public void runIndividual(int num, double pow) {
 		if(num == 1) {
-			ropeMotor1.set(0.4);
+			ropeMotor1.set(pow);
 		} else {
-			ropeMotor2.set(0.4);
+			ropeMotor2.set(pow);
 		}
 	}
 }
