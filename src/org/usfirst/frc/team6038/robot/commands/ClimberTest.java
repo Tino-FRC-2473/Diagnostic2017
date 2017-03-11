@@ -12,10 +12,16 @@ public class ClimberTest extends Command {
 	private boolean notWorking;
 	private ArrayList<Double> currentList;
 	private double power;
+	private int motor;
 
-	public ClimberTest(Robot bot) {
+	public ClimberTest(Robot bot, int num) {
 		requires(Robot.climber);
 		this.bot = bot;
+		motor = num;
+		if(num == 1) {
+			id = "climber_motor1";
+		} else {
+			id = "climber_motor2";
 	}
 	
 	// Called just before this Command runs the first time
@@ -28,8 +34,8 @@ public class ClimberTest extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.climber.climb(power);
-		currentList.add(bot.getDeviceValue("climber"));
+		Robot.climber.runIndividual(motor, power);
+		currentList.add(bot.getDeviceValue(id));
 		if (!notWorking && currentList.size() == maxSize) {
 			double sum = 0;
 			for (int i = 0; i < maxSize; i++) {
@@ -58,7 +64,7 @@ public class ClimberTest extends Command {
 	protected void end() {
 		power = 0;
 		System.out.println("Not Working/Disabled");
-		Robot.climber.climb(0);
+		Robot.climber.runIndividual(motor,0);
 	}
 
 	// Called when another command which requires one or more of the same
