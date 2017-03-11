@@ -22,6 +22,7 @@ public class ClimberTest extends Command {
 			id = "climber_motor1";
 		} else {
 			id = "climber_motor2";
+		}
 	}
 	
 	// Called just before this Command runs the first time
