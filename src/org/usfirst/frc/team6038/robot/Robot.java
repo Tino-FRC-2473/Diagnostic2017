@@ -50,7 +50,8 @@ public class Robot extends ThreadingRobot {
 		addDeviceCall("motor_bl", () -> train.getEncPosition("bl")); //add listener for motor motor_bl's encoder position with reference name "motor_fl"
 		addDeviceCall("gyro", () -> gyroSystem.getValue()); //add listener for AnalogGyro gyro's heading with reference name "gyro"
 		addDeviceCall("beam", () -> beam.getBreakbeamValue()); //add listener for the breakbeam object's value with reference name "beam"
-		addDeviceCall("climber", () -> climber.getCurrent());
+		addDeviceCall("climber_motor1", () -> climber.getCurrent(1));
+		addDeviceCall("climber_motor2", () -> climber.getCurrent(2));
 	}
 
 	@Override
