@@ -32,4 +32,12 @@ public class Climber extends Subsystem {
 	public double getCurrent() {
 		return ropeMotor1.getOutputCurrent();
 	}
+	
+	public void runIndividual(int num) {
+		if(num == 1) {
+			ropeMotor1.set(0.4);
+		} else {
+			ropeMotor2.set(0.4);
+		}
+	}
 }
