@@ -19,8 +19,8 @@ public class Robot extends ThreadingRobot {
 	MotorTest motor_test; //this command is run to test the motors
 	BreakbeamTest break_test; //this command is run to test the break beams
 	GyroTest gyro_test; //this command is run to test the gyroscope
-	ClimberTest climber_test;
-	final String mode = "climber"; //this string is for testing purposes, and represents which of the tests are running
+	ClimberTest climber_test1, climber_test2;
+	final String mode = "climber1"; //this string is for testing purposes, and represents which of the tests are running
 	/*
 	 * Here are all of the possible tests and their representative Strings:
 	 * "gyro" --> gyro_test
@@ -35,7 +35,8 @@ public class Robot extends ThreadingRobot {
 		train = new DriveTrain(this); //creation of the drivetrain subsystem object
 		beam = new BreakbeamSystem(); //creation of the breakbeam subsystem object
 		gyroSystem = new GyroSystem(); //creation of the gyro subsystem object
-		climber_test = new ClimberTest(this);
+		climber_test1 = new ClimberTest(this, 1);
+		climber_test2 = new ClimberTest(this, 2);
 		motor_test = new MotorTest(); //creation of the motor test command object
 		break_test = new BreakbeamTest(); //creation of the breakbeam test command object
 		gyro_test = new GyroTest(this); //creation of the gyro test command object
@@ -67,8 +68,12 @@ public class Robot extends ThreadingRobot {
 		case "gyro":
 			gyro_test.start();
 			break;
-		case "climber":
-			climber_test.start();
+		case "climber1":
+			climber_test1.start();
+			break;
+		case "climber2":
+			climber_test2.start();
+			break;
 		}
 		super.runTeleop();
 	}
