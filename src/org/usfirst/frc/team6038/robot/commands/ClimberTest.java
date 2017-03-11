@@ -51,8 +51,8 @@ public class ClimberTest extends Command {
 			else {
 				System.out.println("Working at average of " + avg);
 				notWorking = false;
+				currentList.remove(0);	
 			}
-			currentList.remove(0);
 		}
 	}
 
