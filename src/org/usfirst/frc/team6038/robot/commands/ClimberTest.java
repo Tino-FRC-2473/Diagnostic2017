@@ -13,6 +13,7 @@ public class ClimberTest extends Command {
 	private ArrayList<Double> currentList;
 	private double power;
 	private int motor;
+	private String id;
 
 	public ClimberTest(Robot bot, int num) {
 		requires(Robot.climber);
