@@ -1,22 +1,50 @@
 import java.io.IOException;
 
 public class SocketThread extends Thread {
-	SpecialSocket ss;
+	SpecialSocket specialRocket;
+	private boolean alive;
+	private int coordinatesStartLength = 13;
+	private long lastTimeRV;
+	private long delayRV = 1000;
 	
 	public SocketThread() throws IOException {
-		ss = new SpecialSocket("10.19.80.131", 50007);
+		specialRocket = new SpecialSocket("10.19.80.131", 50007);
+		System.out.println("connected to server");
+		alive = true;
+		lastTimeRV = System.currentTimeMillis();
 	}
 	
 	@Override
 	public void run(){
-		try {
-			String s = ss.getLine();
-			if(s != null && s.equals("s")) {
-				ss.send("");
+		while(alive) {
+			long currTime = System.currentTimeMillis();
+			
+			if (currTime - lastTimeRV > delayRV) {
+				lastTimeRV = currTime;
+				requestValues();
+				System.out.println("requesting values");
 			}
-			sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			
+			String fling = specialRocket.getLine();
+			
+			if(fling != null) {
+				System.out.println("received " + fling);
+				
+				if(fling.equals("s")) {
+					System.out.println("server ping received");
+					specialRocket.send("c");
+				} else {
+					if (fling.substring(0, coordinatesStartLength).equals("coordinates: ")) {
+						System.out.println("coordinates received");
+					}
+				}
+			}
 		}
+		
+		System.out.println("dead");
+	}
+	
+	public void requestValues() {
+		specialRocket.send("function triggered");
 	}
 }

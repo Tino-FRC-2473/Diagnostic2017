@@ -4,7 +4,8 @@ public class Driver {
 	
 	public static void main(String[] args) {
 		try {
-			new SocketThread().start();
+			SocketThread thread = new SocketThread();
+			thread.start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
