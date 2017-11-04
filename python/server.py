@@ -43,6 +43,7 @@ while 1:
         except timeout:
             print "wererewrwe"
         if "function triggered" in data: conn.send("coordinates: "+str(coord1)+" "+str(coord2)+" "+str(coord3)+" "+str(coord4)+"\n")
+        if "done" in data: quit()
     else:
         print "gege"
         conn.close()
