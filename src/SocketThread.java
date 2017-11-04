@@ -9,9 +9,14 @@ public class SocketThread extends Thread {
 	
 	@Override
 	public void run(){
-		String s = ss.getLine();
-		if(s != null && s.equals("s")) {
-			ss.send("");
+		try {
+			String s = ss.getLine();
+			if(s != null && s.equals("s")) {
+				ss.send("");
+			}
+			sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 }
