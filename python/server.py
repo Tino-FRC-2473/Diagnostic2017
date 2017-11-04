@@ -10,10 +10,12 @@ print "listening..."
 s.listen(1)
 global conn
 conn, addr = s.accept()
-#s.settimeout(2.0)
 print 'Connected by', addr
 global data
-
+coord1 = 14.8
+coord2 = 11.14
+coord3 = 11.8
+coord4 = 20.56
 def ping():
     #data = os.system("ping -t 2000 -c 1 10.19.89.50")
     conn.send('s\n')
@@ -35,16 +37,24 @@ while 1:
     print str(recieve)
     if recieve:
         print "ff"
-        #data = conn.recv(1024)
-        #if "ye" in data: conn.send("hehe\n")
+        s.settimeout(2.0)
+        try:
+            data = conn.recv(1024)
+        except timeout:
+            print "wererewrwe"
+        if "function triggered" in data: conn.send("coordinates: "+str(coord1)+" "+str(coord2)+" "+str(coord3)+" "+str(coord4)+"\n")
     else:
         print "gege"
         conn.close()
         print "listening..."
+        s.settimeout(None)
         s.listen(1)
         conn, addr = s.accept()
         print "connected!"
-        #data = conn.recv(1024)
     print "---------"
+    coord1 = coord1 + 1
+    coord2 = coord2 + 1
+    coord3 = coord3 + 1
+    coord4 = coord4 + 1
 
 conn.close()
