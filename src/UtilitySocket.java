@@ -1,11 +1,17 @@
 import java.io.*;
 import java.net.Socket;
 
-public class SpecialSocket extends Socket {
+/**
+ * Socket with built in BufferedReader and PrintStream for convienience.
+ * @author JosephM
+ * @author mvoodarla
+ * @author fishgoatman
+ */
+public class UtilitySocket extends Socket {
 	BufferedReader reader;
 	PrintStream stream;
 	
-	public SpecialSocket(String host, int port) throws IOException {
+	public UtilitySocket(String host, int port) throws IOException {
 		super(host, port);
 		reader = new BufferedReader(new InputStreamReader(getInputStream()));
 		stream = new PrintStream(getOutputStream());

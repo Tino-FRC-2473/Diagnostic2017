@@ -1,15 +1,18 @@
 import java.io.IOException;
 
 public class SocketThread extends Thread {
-	private SpecialSocket ss;
+	private UtilitySocket ss;
 	private boolean alive;
 	private int coordinatesStartLength = 13;
 	private long lastTimeRV;
 	private long delayRV = 1000;
 	private long start;
 	
+	private static final String MV_COMP_IP = "10.19.80.131"; //fuhsd
+	private static final String JETSON_IP = "10.19.48.81"; //fuhsd_guests
+	
 	public SocketThread() throws IOException {
-		ss = new SpecialSocket("10.19.80.131", 50007);
+		ss = new UtilitySocket(JETSON_IP, 50007);
 		System.out.println("connected to server");
 		alive = true;
 		lastTimeRV = System.currentTimeMillis();
