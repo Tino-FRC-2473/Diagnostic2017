@@ -28,12 +28,7 @@ def ping():
 while 1:
     time.sleep(0.1)
     print "yoe"
-    conn.send('s\n')
-    data = conn.recv(1024)
-    print "data: "+str(data)
-    if not data: recieve = False
-    elif 'c\n' in data: recieve = True
-    else: recieve = False
+    recieve = ping()
     print str(recieve)
     if recieve:
         print "ff"
