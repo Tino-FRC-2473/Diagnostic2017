@@ -1,3 +1,5 @@
+package org.usfirst.frc.team2473.robot.diagnostics;
+
 import java.io.IOException;
 
 public class Driver {
