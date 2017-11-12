@@ -2,10 +2,10 @@ import java.io.*;
 import java.net.Socket;
 
 /**
- * Socket with built in BufferedReader and PrintStream for convienience.
+ * Socket with built in BufferedReader and PrintStream for convenience.
  * @author JosephM
  * @author mvoodarla
- * @author fishgoatman
+ * @author wang.patrick57@gmail.com
  */
 public class UtilitySocket extends Socket {
 	BufferedReader reader;
@@ -13,9 +13,9 @@ public class UtilitySocket extends Socket {
 	
 	/**
 	 * Creates the socket and initializes the BufferedReader and PrintStream.
-	 * @param host ip the connection is occurring on
-	 * @param port the port the connection on this ip is occurring on
-	 * @throws IOException if an I/O error occurs when creating the socket.
+	 * @param host The IP the connection is occurring on.
+	 * @param port The port the connection on this IP is occurring on.
+	 * @throws IOException If an I/O error occurs when creating the socket.
 	 */
 	public UtilitySocket(String host, int port) throws IOException {
 		super(host, port);
@@ -43,6 +43,7 @@ public class UtilitySocket extends Socket {
 		} catch (IOException e) {
 			System.out.println(e.getStackTrace());
 		}
+		
 		return null;
 	}
 }
