@@ -8,10 +8,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import java.io.IOException;
-
 import org.usfirst.frc.team2473.robot.commands.ExampleCommand;
-import org.usfirst.frc.team2473.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team2473.robot.subsystems.TalonSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,31 +19,17 @@ import org.usfirst.frc.team2473.robot.subsystems.ExampleSubsystem;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-	public static OI oi;
-	public static SocketThread socketThread;
-	
-	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
-	
-
+	public static TalonSubsystem talonSys;
+	public static TalonTesterThread talonThread;
+	private boolean first;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-		oi = new OI();
-		chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
-		try {
-			socketThread = new SocketThread();
-			socketThread.start();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		talonSys = new TalonSubsystem();
+		talonThread = new TalonTesterThread();
 	}
 
 	/**
@@ -76,18 +60,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
-			autonomousCommand.start();
+		talonThread.start();
+		first = true;
 	}
 
 	/**
@@ -95,18 +69,15 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
+		if(first) {
+			talonSys.setPow(.5);
+			first = false;
+		}
 	}
 
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		socketThread.end();
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
+		talonThread.kill();
 	}
 
 	/**
