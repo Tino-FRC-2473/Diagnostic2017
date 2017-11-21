@@ -13,7 +13,7 @@ public class TalonSubsystem extends Subsystem {
 	private CANTalon talon;
 	
 	public TalonSubsystem() {
-		talon = new CANTalon(RobotMap.MOTOR); //need legit port numbers for real use
+		talon = new CANTalon(1);
 	}
 	
     public void initDefaultCommand() {

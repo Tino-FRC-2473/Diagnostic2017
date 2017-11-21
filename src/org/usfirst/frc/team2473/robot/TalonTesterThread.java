@@ -23,6 +23,7 @@ public class TalonTesterThread extends Thread {
 		sumRange = new ArrayList<Double>();
 		try {
 			server = new ServerSocket(port);
+			System.out.println("waiting for client connection");
 			socket = server.accept();
 			out = new PrintWriter(socket.getOutputStream());
 			
@@ -38,8 +39,8 @@ public class TalonTesterThread extends Thread {
 			double c = Robot.talonSys.getCurrent();
 			sumTotal += c;
 			addCurrentToList(c);
-			String str = Robot.talonSys.getSpeed() + " " + Robot.talonSys.getCurrent() + 
-					   getAverageOfLastValues(10) + " " + getAverageOfLastValues(5);
+			String str = System.currentTimeMillis() + Robot.talonSys.getSpeed() + " " + Robot.talonSys.getCurrent() +
+					sumTotal + getAverageOfLastValues(10) + " " + getAverageOfLastValues(5);
 			System.out.println(str);
 			out.println(str);
 			
