@@ -1,15 +1,14 @@
 import java.io.IOException;
 
 /**
- * Main socket class that does everything. Constantly pings and can be configured to perform other actions like request values.
+ * Main socket class. Automatically pings back to the server to inform of its connection.
+ * Can be configured to perform other actions like request values from the server and read them.
+ * 
  * @author wang.patrick57@gmail.com
  * @author JosephM
  */
 public class SocketPingThread extends Thread {
-	/* Abbreviations of methods (used for stuffToDoEveryTick and variable names)
-	 * requestValues(): rv
-	 */
-	
+	//rv: request values
 	private UtilitySocket us;
 	private boolean alive;
 	private long lastTimeRV;
@@ -23,7 +22,7 @@ public class SocketPingThread extends Thread {
 	private static final String JETSON_IP = "10.19.48.81"; //fuhsd_guests
 	
 	/**
-	 * Creates a UtilitySocket with the ip and port and sets up all the necessary variables.
+	 * Creates a SocketPingThread.
 	 * @throws IOException If an I/O error occurs when creating the socket
 	 */
 	public SocketPingThread() throws IOException {
@@ -35,7 +34,8 @@ public class SocketPingThread extends Thread {
 	}
 	
 	/**
-	 * The method that is run every tick. It pings the server no matter what, and it also runs all the commands in stuffToDoEveryTick
+	 * The method that is run every tick. It responds to pings from the server.
+	 * Also runs all the commands in stuffToDoEveryTick.
 	 */
 	@Override
 	public void run(){
