@@ -3,11 +3,12 @@ import numpy as np
 import socket
 from pynput.keyboard import Key, Listener
 
-HOST = '10.24.73.69'
+HOST = '172.22.11.2'
 PORT = 50007
 STOP_KEY = 'S'
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST,PORT))
+d.setblocking(0)
 
 pressed = False;
 
@@ -47,6 +48,11 @@ plt.savefig()
 
 plt.figure(1)
 plt.plot(time,current)
+plt.show()
+plt.savefig()
+
+plt.figure(2)
+plt.plot(time,integralT)
 plt.show()
 plt.savefig()
 
