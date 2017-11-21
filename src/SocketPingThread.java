@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 
 /**
@@ -43,6 +44,7 @@ public class SocketPingThread extends Thread {
 			currTime = System.currentTimeMillis();
 			everyTick();
 			String line = us.getLine();
+			System.out.println(line);
 			
 			if(line != null) {
 				System.out.println("received " + line);
@@ -73,7 +75,7 @@ public class SocketPingThread extends Thread {
 	public void everyTick() {
 		for (String s : stuffToDoEveryTick) {
 			if (s.equals("rv")) {
-				requestValues();
+				//requestValues();
 			}
 		}
 	}
