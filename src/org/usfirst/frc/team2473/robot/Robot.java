@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import java.io.IOException;
-
 import org.usfirst.frc.team2473.robot.commands.ExampleCommand;
 import org.usfirst.frc.team2473.robot.subsystems.ExampleSubsystem;
 
@@ -24,11 +22,9 @@ public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
-	public static SocketThread socketThread;
-	
+
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
-	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -36,16 +32,17 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		oi = new OI();
-		chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
 		try {
-			socketThread = new SocketThread();
-			socketThread.start();
-		} catch (IOException e) {
-			e.printStackTrace();
+			CrashTracker.logRobotInit();
+			oi = new OI();
+			chooser.addDefault("Default Auto", new ExampleCommand());
+			// chooser.addObject("My Auto", new MyAutoCommand());
+			SmartDashboard.putData("Auto mode", chooser);
+		} catch (Throwable t) {
+			CrashTracker.logThrowableCrash(t);
+			throw t;
 		}
+
 	}
 
 	/**
@@ -55,12 +52,23 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		try {
+			CrashTracker.logDisabledInit();
+		} catch (Throwable t) {
+			CrashTracker.logThrowableCrash(t);
+			throw t;
+		}
 
 	}
 
 	@Override
 	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
+		try {
+			Scheduler.getInstance().run();
+		} catch (Throwable t) {
+			CrashTracker.logThrowableCrash(t);
+			throw t;
+		}
 	}
 
 	/**
@@ -76,18 +84,24 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
+		try {
+			/*
+			 * String autoSelected = SmartDashboard.getString("Auto Selector",
+			 * "Default"); switch(autoSelected) { case "My Auto":
+			 * autonomousCommand = new MyAutoCommand(); break; case
+			 * "Default Auto": default: autonomousCommand = new
+			 * ExampleCommand(); break; }
+			 */
 
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
-			autonomousCommand.start();
+			// schedule the autonomous command (example)
+			CrashTracker.logAutoInit();
+			if (autonomousCommand != null)
+				autonomousCommand.start();
+			autonomousCommand = chooser.getSelected();
+		} catch (Throwable t) {
+			CrashTracker.logThrowableCrash(t);
+			throw t;
+		}
 	}
 
 	/**
@@ -95,7 +109,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
+		try {
+			Scheduler.getInstance().run();
+		} catch (Throwable t) {
+			CrashTracker.logThrowableCrash(t);
+			throw t;
+		}
 	}
 
 	@Override
@@ -104,9 +123,14 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		socketThread.end();
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
+		try {
+			CrashTracker.logTeleopInit();
+			if (autonomousCommand != null)
+				autonomousCommand.cancel();
+		} catch (Throwable t) {
+			CrashTracker.logThrowableCrash(t);
+			throw t;
+		}
 	}
 
 	/**
@@ -114,7 +138,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
+		try {
+			Scheduler.getInstance().run();
+		} catch (Throwable t) {
+			CrashTracker.logThrowableCrash(t);
+			throw t;
+		}
+
 	}
 
 	/**
@@ -122,6 +152,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		LiveWindow.run();
+		try {
+			LiveWindow.run();
+		} catch (Throwable t) {
+			CrashTracker.logThrowableCrash(t);
+			throw t;
+		}
 	}
 }
