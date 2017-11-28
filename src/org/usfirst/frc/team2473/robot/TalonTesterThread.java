@@ -22,9 +22,11 @@ public class TalonTesterThread extends Thread {
 		sumTotal = 0;
 		sumRange = new ArrayList<Double>();
 		try {
+			System.out.println("B");
 			server = new ServerSocket(port);
 			System.out.println("waiting for client connection");
 			socket = server.accept();
+			System.out.println("connected");
 			out = new PrintWriter(socket.getOutputStream());
 			
 		} catch (IOException e) {

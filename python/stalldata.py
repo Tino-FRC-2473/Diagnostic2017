@@ -19,13 +19,8 @@ integralT = []
 integral1 = []
 integral2 = []
 
-def check_stop(key):
-	if(key == Key.esc):
-		pressed = True
-	return False;
-
-with Listener(on_press=check_stop) as listener:
-	while not pressed:
+while True:
+	try:
 		data = s.recv(1024)
 		dataList = data.split()
 		t = dataList[0]
@@ -40,6 +35,8 @@ with Listener(on_press=check_stop) as listener:
 		integralT.append(iT)
 		integral1.append(i1)
 		integral2.append(i2)
+	except KeyboardInterrupt:
+		break
 
 plt.figure(0)
 plt.plot(time,rpm)
