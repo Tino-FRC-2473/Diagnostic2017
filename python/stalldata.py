@@ -25,7 +25,7 @@ startTime = 0
 firstTime = True
 
 def writeCSV(arrX, arrY, name):
-    with open(str(name) + '.csv', 'a') as csvfile:
+    with open('csvs/' + str(name) + '.csv', 'a') as csvfile:
         spamwriter = csv.writer(csvfile, quoting=csv.QUOTE_MINIMAL)
         [str(i) for i in arrX]
         spamwriter.writerow(arrX)
@@ -63,31 +63,31 @@ print('saving data', t)
 
 plt.figure(0)
 plt.plot(times,rpm)
-plt.savefig('rpm.png')
+plt.savefig('pngs/rpm.png')
 writeCSV(times, rpm, 'rpm')
 sys.stdout.write('.')
 
 plt.figure(1)
 plt.plot(times,current)
-plt.savefig('cur.png')
+plt.savefig('pngs/cur.png')
 writeCSV(times, current, 'cur')
 sys.stdout.write('.')
 
 plt.figure(2)
 plt.plot(times,sumT)
-plt.savefig('smT.png')
+plt.savefig('pngs/smT.png')
 writeCSV(times, sumT, 'smT')
 sys.stdout.write('.')
 
 plt.figure(3)
 plt.plot(times,integral1)
-plt.savefig('in1.png')
+plt.savefig('pngs/in1.png')
 writeCSV(times, integral1, 'in1')
 sys.stdout.write('.')
 
 plt.figure(4)
 plt.plot(times,integral2)
-plt.savefig('in2.png')
+plt.savefig('pngs/in2.png')
 writeCSV(times, integral2, 'in2')
 sys.stdout.write('.\n')
 
