@@ -25,4 +25,14 @@ public class SubsystemTracker {
 	public void resetSensors() {
 		allSubsystems.forEach((s) -> s.resetSensors());
 	}
+	
+	public void logCurrentState() {
+		for (RobotSubsystem i: allSubsystems) {
+			CrashTracker.logMarker(i.getClass().getSimpleName() + i.currentState());
+		}
+	}
+	
+	public void logCurrentState(RobotSubsystem r) {
+		CrashTracker.logMarker(r.getClass().getSimpleName() + r.currentState());
+	}
 }

@@ -11,4 +11,6 @@ public abstract class RobotSubsystem extends Subsystem{
     public abstract void stop();
 
     public abstract void resetSensors();
+    
+    public abstract String currentState();
 }

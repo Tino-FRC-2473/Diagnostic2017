@@ -49,4 +49,5 @@ public class CrashTracker {
 	public static void logThrowableCrash(Throwable throwable) {
 		logMarker("Exception", throwable);
 	}
+	
 }
