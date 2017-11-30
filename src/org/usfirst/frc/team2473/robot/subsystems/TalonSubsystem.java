@@ -11,7 +11,7 @@ public class TalonSubsystem extends Subsystem {
 	private CANTalon talon;
 	
 	public TalonSubsystem() {
-		talon = new CANTalon(1);
+		talon = new CANTalon(2);
 	}
 	
     public void initDefaultCommand() {

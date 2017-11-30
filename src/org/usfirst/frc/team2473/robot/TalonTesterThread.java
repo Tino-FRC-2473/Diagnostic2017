@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2473.robot;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,19 +16,18 @@ public class TalonTesterThread extends Thread {
 	private String host = "";
 	private ServerSocket server;
 	private Socket socket;
-	private PrintWriter out;
+	private PrintStream ps;
 	public TalonTesterThread() {
 		alive = true;
 
 		sumTotal = 0;
 		sumRange = new ArrayList<Double>();
 		try {
-			System.out.println("B");
 			server = new ServerSocket(port);
 			System.out.println("waiting for client connection");
 			socket = server.accept();
 			System.out.println("connected");
-			out = new PrintWriter(socket.getOutputStream());
+			ps = new PrintStream(socket.getOutputStream());
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -41,13 +41,14 @@ public class TalonTesterThread extends Thread {
 			double c = Robot.talonSys.getCurrent();
 			sumTotal += c;
 			addCurrentToList(c);
-			String str = System.currentTimeMillis() + Robot.talonSys.getSpeed() + " " + Robot.talonSys.getCurrent() +
-					sumTotal + getAverageOfLastValues(10) + " " + getAverageOfLastValues(5);
+			String str = "Send: " + System.currentTimeMillis() + " " + Robot.talonSys.getSpeed() + " " +
+					Robot.talonSys.getCurrent() + " " + sumTotal + " " + getAverageOfLastValues(10) + " "
+					+ getAverageOfLastValues(5);
 			System.out.println(str);
-			out.println(str);
+			ps.print(str + "\n");
 			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

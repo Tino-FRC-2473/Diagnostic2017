@@ -69,7 +69,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		if(first) {
-			talonSys.setPow(.5);
+			talonSys.setPow(.2); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			first = false;
 		}
 	}
