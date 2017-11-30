@@ -3,14 +3,13 @@ import numpy as np
 import socket
 from pynput.keyboard import Key, Listener
 
-HOST = '172.22.11.2'
+HOST = '10.24.73.61'
 PORT = 50007
 STOP_KEY = 'S'
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+print 'trying to connect'
 s.connect((HOST,PORT))
-d.setblocking(0)
-
-pressed = False;
+print 'connected'
 
 time = []
 rpm = []
@@ -21,14 +20,16 @@ integral2 = []
 
 while True:
 	try:
+		print "weeehoo"
 		data = s.recv(1024)
 		dataList = data.split()
-		t = dataList[0]
-		r = dataList[1] 
-		c = dataList[2]
-		iT = dataList[3]
-		i1 = datalist[4]
-		i2 = dataList[5]
+		print 'dataList' + str(data)
+		t = dataList[1]
+		r = dataList[2]
+		c = dataList[3]
+		iT = dataList[4]
+		i1 = datalist[5]
+		i2 = dataList[6]
 		time.append(t)
 		rpm.append(r)
 		current.append(c)
@@ -62,3 +63,4 @@ plt.figure(4)
 plt.plot(time,integral2)
 plt.show()
 plt.savefig()
+quit()
