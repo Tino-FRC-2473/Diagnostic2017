@@ -1,12 +1,10 @@
 
 package org.usfirst.frc.team2473.robot;
 
+import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-import org.usfirst.frc.team2473.robot.commands.ExampleCommand;
-import org.usfirst.frc.team2473.robot.subsystems.ExampleSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -15,21 +13,43 @@ import org.usfirst.frc.team2473.robot.subsystems.ExampleSubsystem;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends TrackingRobot {
-
-	public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+public abstract class TrackingRobot extends IterativeRobot {
 	public static OI oi;
 
-	Command autonomousCommand;
+	private Command autonomousCommand;
+
+	protected abstract Command getAutoCommand();
+	protected abstract void roboInit();
 	
+	/**
+	 * This function is run when the robot is first started up and should be
+	 * used for any initialization code.
+	 */
 	@Override
-	protected Command getAutoCommand() {
-		return new ExampleCommand();
+	public void robotInit() {
+		try {
+			CrashTracker.logRobotInit();
+			roboInit();
+		} catch (Throwable t) {
+			CrashTracker.logThrowableCrash(t);
+			throw t;
+		}
 	}
-	
+
+	/**
+	 * This function is called once each time the robot enters Disabled mode.
+	 * You can use it to reset any subsystem information you want to clear when
+	 * the robot is disabled.
+	 */
 	@Override
-	protected void roboInit() {
-		oi = new OI();
+	public void disabledInit() {
+		try {
+			CrashTracker.logDisabledInit();
+		} catch (Throwable t) {
+			CrashTracker.logThrowableCrash(t);
+			throw t;
+		}
+
 	}
 
 	@Override
@@ -56,18 +76,10 @@ public class Robot extends TrackingRobot {
 	@Override
 	public void autonomousInit() {
 		try {
-			/*
-			 * String autoSelected = SmartDashboard.getString("Auto Selector",
-			 * "Default"); switch(autoSelected) { case "My Auto":
-			 * autonomousCommand = new MyAutoCommand(); break; case
-			 * "Default Auto": default: autonomousCommand = new
-			 * ExampleCommand(); break; }
-			 */
-
-			// schedule the autonomous command (example)
 			CrashTracker.logAutoInit();
 			if (autonomousCommand != null)
 				autonomousCommand.start();
+
 		} catch (Throwable t) {
 			CrashTracker.logThrowableCrash(t);
 			throw t;
@@ -129,6 +141,4 @@ public class Robot extends TrackingRobot {
 			throw t;
 		}
 	}
-
-	
 }
