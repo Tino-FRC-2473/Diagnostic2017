@@ -38,11 +38,11 @@ public class TalonTesterThread extends Thread {
 	@Override
 	public void run() {
 		while(alive) {
-			double c = Robot.talonSys.getCurrent();
+			double c = Robot.train.getCurrent();
 			sumTotal += c;
 			addCurrentToList(c);
-			String str = "Send: " + System.currentTimeMillis() + " " + Robot.talonSys.getSpeed() + " " +
-					Robot.talonSys.getCurrent() + " " + sumTotal + " " + getAverageOfLastValues(10) + " "
+			String str = "Send: " + System.currentTimeMillis() + " " + Robot.train.getSpeed() + " " +
+					Robot.train.getCurrent() + " " + sumTotal + " " + getAverageOfLastValues(10) + " "
 					+ getAverageOfLastValues(5);
 			System.out.println(str);
 			ps.print(str + "\n");
