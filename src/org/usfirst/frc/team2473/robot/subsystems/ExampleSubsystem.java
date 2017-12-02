@@ -41,4 +41,10 @@ public class ExampleSubsystem extends RobotSubsystem {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public String currentState() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
