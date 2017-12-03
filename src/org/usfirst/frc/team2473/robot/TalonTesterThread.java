@@ -41,7 +41,7 @@ public class TalonTesterThread extends Thread {
 			double c = Robot.train.getCurrent();
 			sumTotal += c;
 			addCurrentToList(c);
-			String str = "Send: " + System.currentTimeMillis() + " " + Robot.train.getSpeed() + " " +
+			String str = "Send: " + System.currentTimeMillis() + " " + (-Robot.train.getSpeed()) + " " +
 					Robot.train.getCurrent() + " " + sumTotal + " " + getAverageOfLastValues(10) + " "
 					+ getAverageOfLastValues(5);
 			System.out.println(str);

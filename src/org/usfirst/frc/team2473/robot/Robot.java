@@ -56,7 +56,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		if(first) {
-			train.runMotors(.2); //!!!!!!!!!!!
+			train.runMotors(.5); //!!!!!!!!!!!
 			first = false;
 		}
 	}
@@ -64,6 +64,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		talonThread.kill();
+		first = true;
 	}
 
 	/**
@@ -71,7 +72,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
+		if(first) {
+			train.runMotors(-.15); //!!!!!!!!!!!
+			first = false;
+		}
 	}
 
 	/**

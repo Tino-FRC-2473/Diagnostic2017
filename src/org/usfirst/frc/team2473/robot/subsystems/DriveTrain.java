@@ -25,9 +25,9 @@ public class DriveTrain extends Subsystem {
 
 	public void runMotors(double pow) {
 		motor_fr.set(pow);
-		motor_fl.set(pow);
+		motor_fl.set(-pow);
 		motor_br.set(pow);
-		motor_bl.set(pow);
+		motor_bl.set(-pow);
 	}
 	
 	public double getSpeed() { //in rpm
