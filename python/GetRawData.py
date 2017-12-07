@@ -31,15 +31,9 @@ while True:
 			startTime = int(dataList[1])
 			startTime = False
 
-		t = int(dataList[1]) - startTime
-		r = dataList[2]
-		c = dataList[3]
-		sT = dataList[4]
-		i1 = dataList[5]
-		i2 = dataList[6]
-		times.append(t)
-		rpm.append(r)
-		current.append(c)
+		times.append(int(dataList[0]) - startTime)
+		rpm.append(dataList[1])
+		current.append(dataList[2])
 	except KeyboardInterrupt:
 		break
 
@@ -51,7 +45,7 @@ plt.savefig('rawCur.png')
 txtFile = open('rawData.txt', 'w')
 
 for i in range(len(times)):
-    txtFile.write(str(times[i] + ' ' + str(rpm[i]) + ' ' + str(current[i]) + '\n');
+    txtFile.write(str(times[i] + ' ' + str(rpm[i]) + ' ' + str(current[i]) + '\n')
 
 txtFile.close()
 quit()

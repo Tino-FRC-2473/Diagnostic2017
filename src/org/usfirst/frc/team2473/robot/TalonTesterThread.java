@@ -38,12 +38,7 @@ public class TalonTesterThread extends Thread {
 	@Override
 	public void run() {
 		while(alive) {
-			double c = Robot.train.getCurrent();
-			sumTotal += c;
-			addCurrentToList(c);
-			String str = "Send: " + System.currentTimeMillis() + " " + (-Robot.train.getSpeed()) + " " +
-					Robot.train.getCurrent() + " " + sumTotal + " " + getAverageOfLastValues(10) + " "
-					+ getAverageOfLastValues(5);
+			String str = System.currentTimeMillis() + " " + (-Robot.train.getSpeed()) + " " + Robot.train.getCurrent();
 			System.out.println(str);
 			ps.print(str + "\n");
 			
@@ -53,22 +48,6 @@ public class TalonTesterThread extends Thread {
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	private void addCurrentToList(double c) {
-		sumRange.add(c);
-		if(sumRange.size() > 10) {
-			sumRange.remove(0);
-		}
-	}
-	
-	private double getAverageOfLastValues(int n) {
-		double sum = 0;
-		for(int i = sumRange.size()-1; i >= sumRange.size()-1-n && i >= 0; i--) {
-			sum += sumRange.get(i);
-		}
-		
-		return sum / Math.min(sumRange.size(), n);
 	}
 	
 	public void kill() {
