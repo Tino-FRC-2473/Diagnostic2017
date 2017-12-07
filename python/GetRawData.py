@@ -42,7 +42,7 @@ print('saving data', t)
 plt.savefig('rawRPM.png')
 plt.savefig('rawCur.png')
 
-txtFile = open('rawData.txt', 'w')
+txtFile = open('data/rawData.txt', 'w')
 
 for i in range(len(times)):
     txtFile.write(str(times[i] + ' ' + str(rpm[i]) + ' ' + str(current[i]) + '\n')
