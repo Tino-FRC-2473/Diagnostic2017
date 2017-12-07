@@ -1,19 +1,17 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import socket
 import sys
 import csv
-from pynput.keyboard import Key, Listener
 import time
 
 BASE_TIME = 1511843312
-HOST = '10.24.73.61'
+HOST = '10.24.73.2'
 PORT = 50007
 STOP_KEY = 'S'
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-print 'trying to connect'
+print('trying to connect')
 s.connect((HOST,PORT))
-print 'connected'
+print('connected')
 
 times = []
 rpm = []
@@ -25,10 +23,10 @@ while True:
 	try:
 		data = s.recv(1024)
 		dataList = data.split()
-		print 'dataList' + str(dataList)
+		print('dataList' + str(dataList))
 
-		if firstTime
-			startTime = int(dataList[1])
+		if firstTime:
+			startTime = float(dataList[1])
 			startTime = False
 
 		times.append(int(dataList[0]) - startTime)
@@ -45,7 +43,6 @@ plt.savefig('rawCur.png')
 txtFile = open('data/rawData.txt', 'w')
 
 for i in range(len(times)):
-    txtFile.write(str(times[i] + ' ' + str(rpm[i]) + ' ' + str(current[i]) + '\n')
-
+    txtFile.write(str(times[i] + ' ' + str(rpm[i]) + ' ' + str(current[i]) + '\n'))
 txtFile.close()
 quit()
