@@ -17,7 +17,7 @@ import org.usfirst.frc.team2473.robot.subsystems.ExampleSubsystem;
  */
 public class Robot extends TrackingRobot {
 
-	public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static ExampleSubsystem exampleSubsystem = ExampleSubsystem.getInstance();
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -28,7 +28,7 @@ public class Robot extends TrackingRobot {
 	}
 	
 	@Override
-	protected void roboInit() {
+	protected void innerRobotInit() {
 		oi = new OI();
 	}
 

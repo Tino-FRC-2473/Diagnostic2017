@@ -6,20 +6,18 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
- */
 public abstract class TrackingRobot extends IterativeRobot {
 	public static OI oi;
 
 	private Command autonomousCommand;
 
 	protected abstract Command getAutoCommand();
-	protected abstract void roboInit();
+	protected abstract void innerRobotInit();
+	protected abstract void innerDisabledInit();
+	protected abstract void innerDisabledPeriodic();
+	protected abstract void innerAutonomousPeriodic();
+	protected abstract void innerTeleopInit();
+	protected abstract void innerTeleopPeriodic();
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -29,7 +27,8 @@ public abstract class TrackingRobot extends IterativeRobot {
 	public void robotInit() {
 		try {
 			CrashTracker.logRobotInit();
-			roboInit();
+			innerRobotInit();
+			autonomousCommand = getAutoCommand();
 		} catch (Throwable t) {
 			CrashTracker.logThrowableCrash(t);
 			throw t;
@@ -45,6 +44,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 	public void disabledInit() {
 		try {
 			CrashTracker.logDisabledInit();
+			innerDisabledInit();
 		} catch (Throwable t) {
 			CrashTracker.logThrowableCrash(t);
 			throw t;
@@ -56,23 +56,13 @@ public abstract class TrackingRobot extends IterativeRobot {
 	public void disabledPeriodic() {
 		try {
 			Scheduler.getInstance().run();
+			innerDisabledPeriodic();
 		} catch (Throwable t) {
 			CrashTracker.logThrowableCrash(t);
 			throw t;
 		}
 	}
 
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
-	 */
 	@Override
 	public void autonomousInit() {
 		try {
@@ -93,6 +83,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		try {
 			Scheduler.getInstance().run();
+			innerAutonomousPeriodic();
 		} catch (Throwable t) {
 			CrashTracker.logThrowableCrash(t);
 			throw t;
@@ -101,14 +92,11 @@ public abstract class TrackingRobot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
 		try {
 			CrashTracker.logTeleopInit();
 			if (autonomousCommand != null)
 				autonomousCommand.cancel();
+			innerTeleopInit();
 		} catch (Throwable t) {
 			CrashTracker.logThrowableCrash(t);
 			throw t;
@@ -122,6 +110,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 	public void teleopPeriodic() {
 		try {
 			Scheduler.getInstance().run();
+			innerTeleopInit();
 		} catch (Throwable t) {
 			CrashTracker.logThrowableCrash(t);
 			throw t;

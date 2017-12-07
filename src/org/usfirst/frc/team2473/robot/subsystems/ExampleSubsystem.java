@@ -5,17 +5,7 @@ import org.usfirst.frc.team2473.robot.CrashTracker;
 /**
  *
  */
-public class ExampleSubsystem extends TrackableSubsystem {
-	private static ExampleSubsystem theInstance;
-
-	static {
-		theInstance = new ExampleSubsystem();
-	}
-	
-	@Override
-	public TrackableSubsystem getInstance() {
-		return theInstance;
-	}
+public class ExampleSubsystem implements TrackableSubsystem {
 	
 	private ExampleSubsystem() {
 		
@@ -43,7 +33,8 @@ public class ExampleSubsystem extends TrackableSubsystem {
 	}
 
 	@Override
-	public String currentState() {
+	public String getState() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
