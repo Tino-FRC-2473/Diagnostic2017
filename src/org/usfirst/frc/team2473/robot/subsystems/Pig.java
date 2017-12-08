@@ -1,11 +1,13 @@
 package org.usfirst.frc.team2473.robot.subsystems;
 
+import org.usfirst.frc.team2473.robot.Instances;
+
 public class Pig implements Interface { //see Interface.java
 	public static void main(String[] args) {
 		//using the static reference of the classes Pig and Animal, cast it to such and apply the print status method		
-		((Pig) CollectionModel.getInstanceOf(Pig.class)).printStatus();
-		((Animal) CollectionModel.getInstanceOf(Animal.class)).printStatus();
-		((Pig) CollectionModel.getInstanceOf(Animal.class)).printStatus();
+		((Pig) Instances.getInstanceOf(Pig.class)).printStatus();
+		((Animal) Instances.getInstanceOf(Animal.class)).printStatus();
+		((Pig) Instances.getInstanceOf(Animal.class)).printStatus();
 		//see CollectionModel.java
 	}
 

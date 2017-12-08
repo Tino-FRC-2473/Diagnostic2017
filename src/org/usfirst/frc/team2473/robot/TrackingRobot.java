@@ -1,20 +1,20 @@
 
 package org.usfirst.frc.team2473.robot;
 
+import java.io.IOException;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public abstract class TrackingRobot extends IterativeRobot {
-	public static OI oi;
-
-	private Command autonomousCommand;
-
-	protected abstract Command getAutoCommand();
+	UtilitySocket socket;
+	CrashTracker tracker;
+	
 	protected abstract void innerRobotInit();
 	protected abstract void innerDisabledInit();
 	protected abstract void innerDisabledPeriodic();
+	protected abstract void innerAutonomousInit();
 	protected abstract void innerAutonomousPeriodic();
 	protected abstract void innerTeleopInit();
 	protected abstract void innerTeleopPeriodic();
@@ -26,9 +26,16 @@ public abstract class TrackingRobot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		try {
+			System.out.println("WAITING FOR CLIENT CONNECTION");
+			socket = new UtilitySocket("10.24.73.2", 50505);
+			tracker = new CrashTracker(socket);
+			System.out.println("CONNECTED");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
 			CrashTracker.logRobotInit();
 			innerRobotInit();
-			autonomousCommand = getAutoCommand();
 		} catch (Throwable t) {
 			CrashTracker.logThrowableCrash(t);
 			throw t;
@@ -49,7 +56,6 @@ public abstract class TrackingRobot extends IterativeRobot {
 			CrashTracker.logThrowableCrash(t);
 			throw t;
 		}
-
 	}
 
 	@Override
@@ -67,9 +73,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 	public void autonomousInit() {
 		try {
 			CrashTracker.logAutoInit();
-			if (autonomousCommand != null)
-				autonomousCommand.start();
-
+			innerAutonomousInit();
 		} catch (Throwable t) {
 			CrashTracker.logThrowableCrash(t);
 			throw t;
@@ -94,8 +98,6 @@ public abstract class TrackingRobot extends IterativeRobot {
 	public void teleopInit() {
 		try {
 			CrashTracker.logTeleopInit();
-			if (autonomousCommand != null)
-				autonomousCommand.cancel();
 			innerTeleopInit();
 		} catch (Throwable t) {
 			CrashTracker.logThrowableCrash(t);

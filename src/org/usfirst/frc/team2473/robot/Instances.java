@@ -1,8 +1,8 @@
-package org.usfirst.frc.team2473.robot.subsystems;
+package org.usfirst.frc.team2473.robot;
 
 import java.util.ArrayList;
 
-public class CollectionModel {
+public class Instances {
 
 	public static ArrayList<Class<?>> classes = new ArrayList<Class<?>>(); //stores the existing classes used in the program
 	public static ArrayList<Object> objects = new ArrayList<Object>(); //stores the instances of those classes existing in this program

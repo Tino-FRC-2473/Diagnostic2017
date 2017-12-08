@@ -3,50 +3,56 @@ package org.usfirst.frc.team2473.robot;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.Date;
 
 public class CrashTracker {
+	UtilitySocket socket;
 	
-	public static void logMarker(String s, Throwable exception) {
+	public CrashTracker(UtilitySocket s) {
+		socket = s;
+	}
+	
+	public void logMarker(String s, Throwable exception) {
+		
 		try {
-			PrintWriter writer = new PrintWriter(new FileWriter("crash_tracker.txt"), true);
-			writer.print(new Date().toString());
-			writer.print(", ");
-			writer.print(s);
+			String toSend = new Date().toString() + ", " + s;
+			
 			if (exception != null) {
-				writer.print(", ");
+				toSend += ", " + exception.getS;
 				exception.printStackTrace(writer);
 			}
+			socket.sendLine(toSend);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static void logMarker(String s) {
+	public void logMarker(String s) {
 		logMarker(s,null);
 	}
 	
-	public static void logRobotStartup() {
+	public void logRobotStartup() {
 		logMarker("Robot startup");
 	}
 	
-	public static void logRobotInit() {
+	public void logRobotInit() {
 		logMarker("Robot init");
 	}
 	
-	public static void logAutoInit() {
+	public void logAutoInit() {
 		logMarker("Auto init");
 	}
 	
-	public static void logTeleopInit() {
+	public void logTeleopInit() {
 		logMarker("Teleop init");
 	}
 	
-	public static void logDisabledInit() {
+	public void logDisabledInit() {
 		logMarker("Disabled init");
 	}
 	
-	public static void logThrowableCrash(Throwable throwable) {
+	public void logThrowableCrash(Throwable throwable) {
 		logMarker("Exception", throwable);
 	}
 	

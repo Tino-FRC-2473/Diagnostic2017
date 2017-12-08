@@ -1,9 +1,9 @@
 package org.usfirst.frc.team2473.robot.subsystems;
 
-//https://stackoverflow.com/questions/15941957/passing-class-type-as-parameter-and-creating-instance-of-it
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-public interface TrackableSubsystem {
-    public void stop();
+public abstract class TrackableSubsystem extends Subsystem {
+    public abstract void stop();
     
-    public String getState();
+    public abstract String getState();
 }

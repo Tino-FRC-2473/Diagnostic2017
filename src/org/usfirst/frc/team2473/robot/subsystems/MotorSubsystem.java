@@ -1,24 +1,28 @@
 package org.usfirst.frc.team2473.robot.subsystems;
 
 import org.usfirst.frc.team2473.robot.CrashTracker;
+import org.usfirst.frc.team2473.robot.commands.ExampleCommand;
+
+import com.ctre.CANTalon;
 
 /**
  *
  */
-public class ExampleSubsystem implements TrackableSubsystem {
+public class MotorSubsystem extends TrackableSubsystem {
+	private CANTalon talon1;
+	private double power;
 	
-	private ExampleSubsystem() {
-		
+	public MotorSubsystem(double power) {
+		talon1 = new CANTalon(2);
+		this.power = power;
 	}
 
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
 	}
 	
 	public void run() {
 		try {
-			// add actual code here
+			talon1.set(power);
 		}
 		catch(Throwable t) {
 			CrashTracker.logThrowableCrash(t);
@@ -28,7 +32,7 @@ public class ExampleSubsystem implements TrackableSubsystem {
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
+		talon1.set(0);
 		
 	}
 

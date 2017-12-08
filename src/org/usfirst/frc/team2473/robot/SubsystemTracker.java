@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2473.robot;
 
 import java.util.ArrayList;
+
 import org.usfirst.frc.team2473.robot.subsystems.TrackableSubsystem;
 
 public class SubsystemTracker {
@@ -16,11 +17,11 @@ public class SubsystemTracker {
 	
 	public void logCurrentState() {
 		for (TrackableSubsystem i: allSubsystems) {
-			CrashTracker.logMarker(i.getClass().getSimpleName() + i.currentState());
+			CrashTracker.logMarker(i.getClass().getSimpleName() + i.getState());
 		}
 	}
 	
 	public void logCurrentState(TrackableSubsystem r) {
-		CrashTracker.logMarker(r.getClass().getSimpleName() + r.currentState());
+		CrashTracker.logMarker(r.getClass().getSimpleName() + r.getState());
 	}
 }

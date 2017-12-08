@@ -1,8 +1,11 @@
 package org.usfirst.frc.team2473.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
+import org.usfirst.frc.team2473.robot.Instances;
 import org.usfirst.frc.team2473.robot.Robot;
+import org.usfirst.frc.team2473.robot.subsystems.MotorSubsystem;
 
 /**
  *
@@ -10,7 +13,7 @@ import org.usfirst.frc.team2473.robot.Robot;
 public class ExampleCommand extends Command {
 	public ExampleCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.exampleSubsystem);
+		requires((MotorSubsystem) Instances.getInstanceOf(MotorSubsystem.class));
 	}
 
 	// Called just before this Command runs the first time
@@ -21,6 +24,7 @@ public class ExampleCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		Robot.motorSub.run();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -32,6 +36,7 @@ public class ExampleCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Robot.motorSub.stop();
 	}
 
 	// Called when another command which requires one or more of the same
