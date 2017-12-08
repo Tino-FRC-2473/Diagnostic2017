@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Date;
 
 public class CrashTracker {
@@ -15,18 +16,14 @@ public class CrashTracker {
 
 	public void logMarker(String s, Throwable exception) {
 
-		try {
-			String toSend = new Date().toString() + ", " + s;
+		String toSend = new Date().toString() + ", " + s;
 
-			if (exception != null) {
-				toSend += ", " + Arrays.toString(exception.getStackTrace());
-				exception.printStackTrace(writer);
-			}
-			socket.sendLine(toSend);
-		} catch(IOException e) {
-			e.printStackTrace();
+		if (exception != null) {
+			toSend += ", " + Arrays.toString(exception.getStackTrace());
 		}
+		socket.sendLine(toSend);
 	}
+
 
 	public void logMarker(String s) {
 		logMarker(s,null);
