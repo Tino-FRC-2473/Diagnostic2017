@@ -28,16 +28,6 @@ public class Robot extends TrackingRobot {
 		motorSub = (MotorSubsystem)Instances.getInstanceOf(MotorSubsystem.class);
 		exCmd = new ExampleCommand();
 	}
-
-	@Override
-	public void disabledPeriodic() {
-		try {
-			Scheduler.getInstance().run();
-		} catch (Throwable t) {
-			CrashTracker.logThrowableCrash(t);
-			throw t;
-		}
-	}
 	
 	@Override
 	protected void innerAutonomousInit() {

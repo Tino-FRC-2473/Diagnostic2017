@@ -34,10 +34,10 @@ public abstract class TrackingRobot extends IterativeRobot {
 			e.printStackTrace();
 		}
 		try {
-			CrashTracker.logRobotInit();
+			tracker.logRobotInit();
 			innerRobotInit();
 		} catch (Throwable t) {
-			CrashTracker.logThrowableCrash(t);
+			tracker.logThrowableCrash(t);
 			throw t;
 		}
 	}
@@ -50,10 +50,10 @@ public abstract class TrackingRobot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		try {
-			CrashTracker.logDisabledInit();
+			tracker.logDisabledInit();
 			innerDisabledInit();
 		} catch (Throwable t) {
-			CrashTracker.logThrowableCrash(t);
+			tracker.logThrowableCrash(t);
 			throw t;
 		}
 	}
@@ -64,7 +64,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 			Scheduler.getInstance().run();
 			innerDisabledPeriodic();
 		} catch (Throwable t) {
-			CrashTracker.logThrowableCrash(t);
+			tracker.logThrowableCrash(t);
 			throw t;
 		}
 	}
@@ -72,10 +72,10 @@ public abstract class TrackingRobot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		try {
-			CrashTracker.logAutoInit();
+			tracker.logAutoInit();
 			innerAutonomousInit();
 		} catch (Throwable t) {
-			CrashTracker.logThrowableCrash(t);
+			tracker.logThrowableCrash(t);
 			throw t;
 		}
 	}
@@ -89,7 +89,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 			Scheduler.getInstance().run();
 			innerAutonomousPeriodic();
 		} catch (Throwable t) {
-			CrashTracker.logThrowableCrash(t);
+			tracker.logThrowableCrash(t);
 			throw t;
 		}
 	}
@@ -97,10 +97,10 @@ public abstract class TrackingRobot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		try {
-			CrashTracker.logTeleopInit();
+			tracker.logTeleopInit();
 			innerTeleopInit();
 		} catch (Throwable t) {
-			CrashTracker.logThrowableCrash(t);
+			tracker.logThrowableCrash(t);
 			throw t;
 		}
 	}
@@ -114,7 +114,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 			Scheduler.getInstance().run();
 			innerTeleopInit();
 		} catch (Throwable t) {
-			CrashTracker.logThrowableCrash(t);
+			tracker.logThrowableCrash(t);
 			throw t;
 		}
 
@@ -128,7 +128,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 		try {
 			LiveWindow.run();
 		} catch (Throwable t) {
-			CrashTracker.logThrowableCrash(t);
+			tracker.logThrowableCrash(t);
 			throw t;
 		}
 	}
