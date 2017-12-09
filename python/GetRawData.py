@@ -27,7 +27,7 @@ while True:
 
 		if firstTime:
 			startTime = float(dataList[1])
-			startTime = False
+			firstTime = False
 
 		times.append(int(dataList[0]) - startTime)
 		rpm.append(dataList[1])
