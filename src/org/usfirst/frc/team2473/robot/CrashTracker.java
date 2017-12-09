@@ -1,27 +1,22 @@
 package org.usfirst.frc.team2473.robot;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
+import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.Date;
 
 public class CrashTracker {
-	UtilitySocket socket;
+	PrintStream printStream;
 
-	public CrashTracker(UtilitySocket s) {
-		socket = s;
+	public CrashTracker(PrintStream ps) {
+		printStream = ps;
 	}
 
 	public void logMarker(String s, Throwable exception) {
-
-		String toSend = new Date().toString() + ", " + s;
+		String toSend = "[" + System.currentTimeMillis() + "] " + s;
 
 		if (exception != null) {
 			toSend += ", " + Arrays.toString(exception.getStackTrace());
 		}
-		socket.sendLine(toSend);
+		printStream.print(toSend);
 	}
 
 

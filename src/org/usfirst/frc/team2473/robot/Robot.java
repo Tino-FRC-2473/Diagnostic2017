@@ -6,8 +6,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.usfirst.frc.team2473.robot.commands.ExampleCommand;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.usfirst.frc.team2473.robot.commands.Type1AutoCommand;
 import org.usfirst.frc.team2473.robot.subsystems.MotorSubsystem;
+import org.usfirst.frc.team2473.robot.subsystems.TrackableSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -17,38 +21,35 @@ import org.usfirst.frc.team2473.robot.subsystems.MotorSubsystem;
  * directory.
  */
 public class Robot extends TrackingRobot {
-
-	public static MotorSubsystem motorSub;
-	public static ExampleCommand exCmd;
 	public static Controls oi;
+	
+	@Override
+	protected String getProgramName() {
+		return "Architecture Testing";
+	}
+	
+	@Override
+	protected ArrayList<Class<? extends TrackableSubsystem>> getSubsystemClasses() {
+		return new ArrayList<Class<? extends TrackableSubsystem>>(Arrays.asList(MotorSubsystem.class));
+	}
+	
+	@Override
+	protected Class<? extends Command> getAutonomousCommand() {
+		return Type1AutoCommand.class;
+	}
 	
 	@Override
 	protected void innerRobotInit() {
 		oi = Controls.getInstance();
-		motorSub = (MotorSubsystem)Instances.getInstanceOf(MotorSubsystem.class);
-		exCmd = new ExampleCommand();
 	}
 	
 	@Override
 	protected void innerAutonomousInit() {
-		exCmd.start();
-	}
-
-	@Override
-	protected void innerDisabledInit() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void innerDisabledPeriodic() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	protected void innerAutonomousPeriodic() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -60,6 +61,18 @@ public class Robot extends TrackingRobot {
 
 	@Override
 	protected void innerTeleopPeriodic() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	protected void innerDisabledInit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void innerDisabledPeriodic() {
 		// TODO Auto-generated method stub
 		
 	}
