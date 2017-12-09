@@ -5,10 +5,15 @@ import java.util.ArrayList;
 import org.usfirst.frc.team2473.robot.subsystems.TrackableSubsystem;
 
 public class SubsystemTracker {
-	private final ArrayList<TrackableSubsystem> allSubsystems;
+	private CrashTracker crashTracker;
+	private ArrayList<TrackableSubsystem> allSubsystems;
 	
-	public SubsystemTracker(ArrayList<TrackableSubsystem> subsystemList) {
-		allSubsystems = subsystemList;
+	public SubsystemTracker(CrashTracker crash, ArrayList<Class<? extends TrackableSubsystem>> subsystemClassList) {
+		crashTracker = crash;
+		allSubsystems = new ArrayList<TrackableSubsystem>();
+		for(Class<? extends TrackableSubsystem> c : subsystemClassList) {
+			allSubsystems.add((TrackableSubsystem)Instances.getInstanceOf(c));
+		}
 	}
 	
 	public void stop() {
@@ -17,11 +22,11 @@ public class SubsystemTracker {
 	
 	public void logCurrentState() {
 		for (TrackableSubsystem i: allSubsystems) {
-			CrashTracker.logMarker(i.getClass().getSimpleName() + i.getState());
+			crashTracker.logMarker(i.getClass().getSimpleName() + i.getState());
 		}
 	}
 	
 	public void logCurrentState(TrackableSubsystem r) {
-		CrashTracker.logMarker(r.getClass().getSimpleName() + r.getState());
+		crashTracker.logMarker(r.getClass().getSimpleName() + r.getState());
 	}
 }

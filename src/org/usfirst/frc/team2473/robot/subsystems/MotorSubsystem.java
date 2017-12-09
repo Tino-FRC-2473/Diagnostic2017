@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2473.robot.subsystems;
 
 import org.usfirst.frc.team2473.robot.CrashTracker;
-import org.usfirst.frc.team2473.robot.commands.ExampleCommand;
+import org.usfirst.frc.team2473.robot.commands.Type1AutoCommand;
 
 import com.ctre.CANTalon;
 
@@ -12,22 +12,16 @@ public class MotorSubsystem extends TrackableSubsystem {
 	private CANTalon talon1;
 	private double power;
 	
-	public MotorSubsystem(double power) {
+	public MotorSubsystem() {
 		talon1 = new CANTalon(2);
-		this.power = power;
+		this.power = .5;
 	}
 
 	public void initDefaultCommand() {
 	}
 	
 	public void run() {
-		try {
-			talon1.set(power);
-		}
-		catch(Throwable t) {
-			CrashTracker.logThrowableCrash(t);
-			throw t;
-		}
+		talon1.set(power);
 	}
 
 	@Override
@@ -38,8 +32,7 @@ public class MotorSubsystem extends TrackableSubsystem {
 
 	@Override
 	public String getState() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Current: " + talon1.getOutputCurrent();
 	}
 
 	
