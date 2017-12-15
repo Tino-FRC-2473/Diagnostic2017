@@ -1,6 +1,4 @@
-package org.usfirst.frc.team2473.robot.subsystems;
-
-import org.usfirst.frc.team2473.robot.Instances;
+package org.usfirst.frc.team2473.test;
 
 public class Pig implements Interface { //see Interface.java
 	public static void main(String[] args) {

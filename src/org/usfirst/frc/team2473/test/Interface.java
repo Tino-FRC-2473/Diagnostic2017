@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2473.robot.subsystems;
+package org.usfirst.frc.team2473.test;
 
 /**
  * a simple interface with 1 method, to print something

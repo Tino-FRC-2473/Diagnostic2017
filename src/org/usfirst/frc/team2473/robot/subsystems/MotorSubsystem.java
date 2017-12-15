@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2473.robot.subsystems;
 
-import org.usfirst.frc.team2473.robot.CrashTracker;
+import org.usfirst.frc.team2473.framework.CrashTracker;
 import org.usfirst.frc.team2473.robot.commands.Type1AutoCommand;
 
 import com.ctre.CANTalon;

@@ -2,13 +2,8 @@
 package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
+import org.usfirst.frc.team2473.framework.TrackingRobot;
 import org.usfirst.frc.team2473.robot.commands.Type1AutoCommand;
 import org.usfirst.frc.team2473.robot.subsystems.MotorSubsystem;
 import org.usfirst.frc.team2473.robot.subsystems.TrackableSubsystem;
@@ -21,7 +16,8 @@ import org.usfirst.frc.team2473.robot.subsystems.TrackableSubsystem;
  * directory.
  */
 public class Robot extends TrackingRobot {
-	public static Controls oi;
+	@Override protected boolean runDashboardNetworking()	{	return true;	}
+	@Override protected boolean runJetsonNetworking()		{	return false;	}
 	
 	@Override
 	protected String getProgramName() {
@@ -29,18 +25,20 @@ public class Robot extends TrackingRobot {
 	}
 	
 	@Override
-	protected ArrayList<Class<? extends TrackableSubsystem>> getSubsystemClasses() {
-		return new ArrayList<Class<? extends TrackableSubsystem>>(Arrays.asList(MotorSubsystem.class));
+	protected TrackableSubsystem[] getTSubsystems() {
+		return new TrackableSubsystem[] {
+				new MotorSubsystem()
+		};
 	}
 	
 	@Override
-	protected Class<? extends Command> getAutonomousCommand() {
-		return Type1AutoCommand.class;
+	protected Command getAutonomousCommand() {
+		return new Type1AutoCommand();
 	}
 	
 	@Override
 	protected void innerRobotInit() {
-		oi = Controls.getInstance();
+		
 	}
 	
 	@Override

@@ -1,11 +1,12 @@
-package org.usfirst.frc.team2473.robot;
+package org.usfirst.frc.team2473.test;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team2473.robot.subsystems.TrackableSubsystem;
 
 public class Instances {
-
 	public static ArrayList<Class<?>> classes = new ArrayList<Class<?>>(); //stores the existing classes used in the program
 	public static ArrayList<Object> objects = new ArrayList<Object>(); //stores the instances of those classes existing in this program
 
@@ -19,6 +20,13 @@ public class Instances {
 	public static void pushModel(Class<?> c) throws InstantiationException, IllegalAccessException {
 		if(classes.indexOf(c) == -1) {
 			classes.add(c);
+			objects.add(c.newInstance());
+		}
+	}
+	
+	public static void pushModel(Constructor<?> c) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		if(classes.indexOf(c) == -1) {
+			classes.add(c.getDeclaringClass());
 			objects.add(c.newInstance());
 		}
 	}

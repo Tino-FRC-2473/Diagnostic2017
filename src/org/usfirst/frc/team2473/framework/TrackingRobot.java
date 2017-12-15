@@ -1,13 +1,11 @@
 
-package org.usfirst.frc.team2473.robot;
+package org.usfirst.frc.team2473.framework;
 
-import java.io.IOException;
 import java.io.PrintStream;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.ArrayList;
 import java.util.stream.IntStream;
 
+import org.usfirst.frc.team2473.networking.UtilityServerSocket;
+import org.usfirst.frc.team2473.robot.InfoSendThread;
 import org.usfirst.frc.team2473.robot.subsystems.TrackableSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -16,22 +14,26 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public abstract class TrackingRobot extends IterativeRobot {
-	private ServerSocket server;
-	private Socket socket;
+	private UtilityServerSocket dashServer;
+	
 	private CrashTracker crashTracker;
-	private SubsystemTracker subsystemTracker;
-	private SenderThread senderThread;
+	private SubsystemManager subsystemManager;
+	private PrintStream printStream;
+	private InfoSendThread sendThread;
+	
+	protected abstract boolean runDashboardNetworking();
+	protected abstract boolean runJetsonNetworking();
 	
 	protected abstract String getProgramName();
-	protected abstract ArrayList<Class<? extends TrackableSubsystem>> getSubsystemClasses();
-	protected abstract Class<? extends Command> getAutonomousCommand();
-	protected abstract void innerRobotInit();
-	protected abstract void innerAutonomousInit();
-	protected abstract void innerAutonomousPeriodic();
-	protected abstract void innerTeleopInit();
-	protected abstract void innerTeleopPeriodic();
-	protected abstract void innerDisabledInit();
-	protected abstract void innerDisabledPeriodic();
+	protected abstract TrackableSubsystem[] getTSubsystems();
+	protected abstract Command getAutonomousCommand();
+	protected void innerRobotInit(){}
+	protected void innerAutonomousInit(){}
+	protected void innerAutonomousPeriodic(){}
+	protected void innerTeleopInit(){}
+	protected void innerTeleopPeriodic(){}
+	protected void innerDisabledInit(){}
+	protected void innerDisabledPeriodic(){}
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -41,31 +43,44 @@ public abstract class TrackingRobot extends IterativeRobot {
 	public void robotInit() {
 		try {
 			System.out.println("Running: " + getProgramName());
-			System.out.println("Autonomous: " + getAutonomousCommand().getSimpleName());
+			System.out.println("Autonomous: " + getAutonomousCommand().getClass().getSimpleName());
 			IntStream.range(0, 44).forEach(e -> System.out.print("*")); //tribute to pramukh naduthota
 			System.out.println("");
 			
-			server = new ServerSocket(50505);
-			System.out.println("WAITING FOR CLIENT CONNECTION");
-			socket = server.accept();
-			System.out.println("CONNECTED");
+			if(runDashboardNetworking()) {
+				dashServer = new UtilityServerSocket(50505);
+				dashServer.connect();
+			}
+			printStream = new PrintStream( runDashboardNetworking() ? dashServer.getSocket().getOutputStream() : System.out);
 			
+			if(runJetsonNetworking()) {
+				
+			}
 			
-			crashTracker = new CrashTracker(new PrintStream(socket.getOutputStream()));
-			subsystemTracker = new SubsystemTracker(crashTracker, getSubsystemClasses());
+			crashTracker = new CrashTracker(printStream);
+			subsystemManager = new SubsystemManager(crashTracker, getTSubsystems());
+			sendThread = new InfoSendThread(printStream, subsystemManager);
 			
-		} catch (IOException e) {
-			e.printStackTrace();
+			innerRobotInit();
+			
+		} catch (Exception e) {
+			System.out.println("ERROR IN DIAG STARTUP\n"+e.getStackTrace());
 		}
+		
 		try {
 			crashTracker.logRobotInit();
+			sendThread.start();
 			innerRobotInit();
 		} catch (Throwable t) {
 			crashTracker.logThrowableCrash(t);
 			throw t;
 		}
 	}
-
+	
+	public TrackableSubsystem getSubsystem(Class<? extends TrackableSubsystem> cls) {
+		return subsystemManager.getSubsystem(cls);
+	}
+	
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
 	 * You can use it to reset any subsystem information you want to clear when
@@ -75,7 +90,6 @@ public abstract class TrackingRobot extends IterativeRobot {
 	public void disabledInit() {
 		try {
 			crashTracker.logDisabledInit();
-			
 			innerDisabledInit();
 		} catch (Throwable t) {
 			crashTracker.logThrowableCrash(t);
@@ -99,10 +113,10 @@ public abstract class TrackingRobot extends IterativeRobot {
 		try {
 			crashTracker.logAutoInit();
 			innerAutonomousInit();
-			MemeError m = new MemeError();
+			getAutonomousCommand().start();
 		} catch (Throwable t) {
 			crashTracker.logThrowableCrash(t);
-			//throw t;
+			throw t;
 		}
 	}
 

@@ -2,8 +2,8 @@ package org.usfirst.frc.team2473.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-import org.usfirst.frc.team2473.robot.Instances;
 import org.usfirst.frc.team2473.robot.subsystems.MotorSubsystem;
+import org.usfirst.frc.team2473.test.Instances;
 
 /**
  *

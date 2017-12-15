@@ -1,21 +1,25 @@
-package org.usfirst.frc.team2473.robot;
+package org.usfirst.frc.team2473.networking;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.Socket;
 
 /**
- * Socket with built in BufferedReader and PrintStream for convenience.
+ * A convenience extension of the Socket class that has built in methods for
+ * sending and receiving lines through the connection.
  * @author JosephM
  * @author mvoodarla
  * @author wang.patrick57@gmail.com
  */
 public class UtilitySocket extends Socket {
-	BufferedReader reader;
-	PrintStream stream;
+	private BufferedReader reader;
+	private PrintStream stream;
 	
 	/**
 	 * Creates the socket and initializes the BufferedReader and PrintStream.
-	 * @param host The IP the connection is occurring on.
+	 * @param host The IP of the server that the connection is occurring on.
 	 * @param port The port the connection on this IP is occurring on.
 	 * @throws IOException If an I/O error occurs when creating the socket.
 	 */
@@ -26,7 +30,8 @@ public class UtilitySocket extends Socket {
 	}
 	
 	/**
-	 * Sends a string, with a newline appended at the end, to the other connection.
+	 * Sends a string to the server end of the connection. This string automatically
+	 * has a newline character appended to it.
 	 * @param s the string to send
 	 */
 	public void sendLine(String s) {
@@ -34,8 +39,11 @@ public class UtilitySocket extends Socket {
 	}
 	
 	/**
-	 * Obtains a string, or null if nothing was sent, that the other side of the connection sent
-	 * @return that string to obtain
+	 * Obtains the string the server end of the connection sent, or null if nothing
+	 * was sent. If the server end has sent multiple strings since the last time
+	 * this method was called, they will be buffered and the oldest unread string
+	 * will be returned.
+	 * @return the string obtained
 	 */
 	public String getLine() {
 		try {
