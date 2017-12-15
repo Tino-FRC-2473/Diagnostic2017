@@ -4,9 +4,8 @@ package org.usfirst.frc.team2473.framework;
 import java.io.PrintStream;
 import java.util.stream.IntStream;
 
-import org.usfirst.frc.team2473.networking.UtilityServerSocket;
-import org.usfirst.frc.team2473.robot.InfoSendThread;
 import org.usfirst.frc.team2473.robot.subsystems.TrackableSubsystem;
+import org.usfirst.frc.team2473.utility.UtilityServerSocket;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;

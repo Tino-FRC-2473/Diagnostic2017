@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2473.networking;
+package org.usfirst.frc.team2473.utility;
 
 import java.io.BufferedReader;
 import java.io.IOException;
