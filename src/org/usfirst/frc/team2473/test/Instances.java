@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-import org.usfirst.frc.team2473.robot.subsystems.TrackableSubsystem;
+import org.usfirst.frc.team2473.framework.TrackableSubsystem;
 
 public class Instances {
 	public static ArrayList<Class<?>> classes = new ArrayList<Class<?>>(); //stores the existing classes used in the program

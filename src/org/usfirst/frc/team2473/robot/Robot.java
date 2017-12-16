@@ -3,10 +3,10 @@ package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+import org.usfirst.frc.team2473.framework.TrackableSubsystem;
 import org.usfirst.frc.team2473.framework.TrackingRobot;
 import org.usfirst.frc.team2473.robot.commands.Type1AutoCommand;
 import org.usfirst.frc.team2473.robot.subsystems.MotorSubsystem;
-import org.usfirst.frc.team2473.robot.subsystems.TrackableSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -36,42 +36,11 @@ public class Robot extends TrackingRobot {
 		return new Type1AutoCommand();
 	}
 	
-	@Override
-	protected void innerRobotInit() {
-		
-	}
-	
-	@Override
-	protected void innerAutonomousInit() {
-		
-	}
-
-	@Override
-	protected void innerAutonomousPeriodic() {
-		
-	}
-
-	@Override
-	protected void innerTeleopInit() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void innerTeleopPeriodic() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	protected void innerDisabledInit() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void innerDisabledPeriodic() {
-		// TODO Auto-generated method stub
-		
-	}
+	@Override protected void innerRobotInit(){}
+	@Override protected void innerAutonomousInit(){}
+	@Override protected void innerAutonomousPeriodic(){}
+	@Override protected void innerTeleopInit(){}
+	@Override protected void innerTeleopPeriodic(){}
+	@Override protected void innerDisabledInit(){}
+	@Override protected void innerDisabledPeriodic(){}
 }

@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2473.robot.subsystems;
 
-import org.usfirst.frc.team2473.framework.CrashTracker;
-import org.usfirst.frc.team2473.robot.commands.Type1AutoCommand;
+import org.usfirst.frc.team2473.framework.TrackableSubsystem;
 
 import com.ctre.CANTalon;
 
@@ -32,8 +31,6 @@ public class MotorSubsystem extends TrackableSubsystem {
 
 	@Override
 	public String getState() {
-		return "Current: " + talon1.getOutputCurrent();
+		return "Current: " + talon1.getOutputCurrent() + ", Speed: " + talon1.getSpeed();
 	}
-
-	
 }

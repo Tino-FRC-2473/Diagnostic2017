@@ -2,8 +2,6 @@ package org.usfirst.frc.team2473.framework;
 
 import java.io.PrintStream;
 
-import org.usfirst.frc.team2473.robot.subsystems.TrackableSubsystem;
-
 public class InfoSendThread extends Thread {
 	private PrintStream printStream;
 	private SubsystemManager subsystemManager;

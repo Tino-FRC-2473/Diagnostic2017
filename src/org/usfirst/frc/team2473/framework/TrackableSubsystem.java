@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2473.robot.subsystems;
+package org.usfirst.frc.team2473.framework;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
