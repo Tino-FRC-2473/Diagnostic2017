@@ -16,7 +16,7 @@ public class UtilityServerSocket extends ServerSocket {
 	private BufferedReader reader;
 	private PrintStream stream;
 	private Socket socket;
-	private boolean accepted;
+	private boolean connected;
 	
 	/**
 	 * tbd
@@ -25,20 +25,21 @@ public class UtilityServerSocket extends ServerSocket {
 	 */
 	public UtilityServerSocket(int port) throws IOException {
 		super(port);
-		accepted = false;
+		connected = false;
 	}
 	
 	/**
 	 * tbd
-	 * @throws IOException If an I/O error occurs when creating the socket.
+	 * @throws IOException If an I/O error occurs when creating the serversocket.
 	 */
 	public void connect() throws IOException {
-		if(!accepted) {
+		if(!connected) {
 			System.out.println("WAITING FOR CLIENT CONNECTION");
 			socket = super.accept();
 			System.out.println("CONNECTED");
 			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			stream = new PrintStream(socket.getOutputStream());
+			connected = true;
 		}
 	}
 	
@@ -46,11 +47,11 @@ public class UtilityServerSocket extends ServerSocket {
 	 * Sends a string to the server end of the connection. This string automatically
 	 * has a newline character appended to it.
 	 * @param s the string to send
+	 * @throws IOException If an I/O error occurs when creating the serversocket.
 	 */
-	public void sendLine(String s) {
-		if(accepted) {
-			stream.print(s + "\n");
-		}
+	public void sendLine(String s) throws IOException {
+		if(!connected) connect();
+		stream.print(s + "\n");
 	}
 	
 	/**
@@ -59,20 +60,20 @@ public class UtilityServerSocket extends ServerSocket {
 	 * this method was called, they will be buffered and the oldest unread string
 	 * will be returned.
 	 * @return the string obtained
+	 * @throws IOException If an I/O error occurs when creating the serversocket.
 	 */
-	public String getLine() {
-		if(accepted) {
-			try {
-				if(reader.ready()) {
-					return reader.readLine();
-				}
-			} catch (IOException e) {
-				System.out.println(e.getStackTrace());
+	public String getLine() throws IOException {
+		if(!connected) connect();
+		try {
+			if(reader.ready()) {
+				return reader.readLine();
 			}
+		} catch (IOException e) {
+			System.out.println(e.getStackTrace());
 		}
 		return null;	
 	}
-	
+
 	public Socket getSocket() {
 		return socket;
 	}

@@ -49,6 +49,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		System.out.println("ROBOT INIT");
 		try {
 			
 			if(runDashboardNetworking()) {
@@ -101,6 +102,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		System.out.println("DISABLED INIT");
 		try {
 			
 			crashTracker.logDisabledInit();
@@ -129,6 +131,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
+		System.out.println("AUTO INIT");
 		try {
 			
 			crashTracker.logAutoInit();
@@ -162,6 +165,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+		System.out.println("TELEOP INIT");
 		try {
 			
 			crashTracker.logTeleopInit();

@@ -37,33 +37,39 @@ public class DatabaseAndPingThread extends Thread {
 	@Override
 	public void run() {
 		while(alive) {
-			String received = uSocket.getLine();
-			ifDebugPrint("received: " + received);
-			
-			while(received != null) {
-				if(received.equals("s")) {
-					ifDebugPrint("server ping received");
-					uSocket.sendLine("c");
-				} else {
-					//do other stuff from what is received, generally putting information in Database
-					//format of what is received should be in the format of ("key" + " " + typeOfValue)
-					String key = received.substring(0, received.indexOf(" "));
-					
-					if(key.equals("ang")) {
-						Database.getInstance().setNumeric(
-								received.substring(0, received.indexOf(" ")), 
-								Integer.parseInt(received.substring(received.indexOf(" ")+1)
-						));
+			try {
+				long startTime = System.currentTimeMillis();
+				String received = uSocket.getLine();
+				ifDebugPrint("received: " + received);
+				
+				while(received != null) {
+					if(received.equals("s")) {
+						ifDebugPrint("server ping received");
+						uSocket.sendLine("c");
 					} else {
-						//other possibilities
+						//do other stuff from what is received, generally putting information in Database
+						//format of what is received should be in the format of (key + " " + value)
+						String key = received.substring(0, received.indexOf(" "));
+						
+						if(key.equals("ang")) {
+							Database.getInstance().setNumeric(
+									received.substring(0, received.indexOf(" ")), 
+									Integer.parseInt(received.substring(received.indexOf(" ")+1)
+							));
+						} else {
+							//other possibilities
+						}
 					}
+					
+					received = uSocket.getLine();
+					ifDebugPrint("received: " + received);
 				}
 				
-				received = uSocket.getLine();
-				ifDebugPrint("received: " + received);
+				everyTick();
+				Thread.sleep(20 - (System.currentTimeMillis()-startTime));
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
-			
-			everyTick();
 		}
 		
 		System.out.println(getClass().getSimpleName() + " loop ended");
