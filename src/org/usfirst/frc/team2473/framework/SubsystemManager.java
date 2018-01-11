@@ -1,11 +1,9 @@
 package org.usfirst.frc.team2473.framework;
 
 public class SubsystemManager {
-	private CrashTracker crashTracker;
 	private TrackableSubsystem[] subsystems;
 	
-	public SubsystemManager(CrashTracker crash, TrackableSubsystem[] arr) {
-		crashTracker = crash;
+	public SubsystemManager(TrackableSubsystem[] arr) {
 		subsystems = arr;
 	}
 	
@@ -24,11 +22,11 @@ public class SubsystemManager {
 	
 	public void logCurrentState() {
 		for (TrackableSubsystem i: subsystems) {
-			crashTracker.logMarker(i.getClass().getSimpleName() + i.getState());
+			System.out.println(i.getClass().getSimpleName() + ": " + i.getState());
 		}
 	}
 	
 	public void logCurrentState(TrackableSubsystem r) {
-		crashTracker.logMarker(r.getClass().getSimpleName() + r.getState());
+		System.out.println(r.getClass().getSimpleName() + ": " + r.getState());
 	}
 }

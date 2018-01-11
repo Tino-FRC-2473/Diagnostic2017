@@ -1,28 +1,17 @@
 
 package org.usfirst.frc.team2473.framework;
 
-import java.io.PrintStream;
 import java.util.stream.IntStream;
-
-import org.usfirst.frc.team2473.utility.UtilityServerSocket;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public abstract class TrackingRobot extends IterativeRobot {
-	private UtilityServerSocket dashServer;
-	
-	private CrashTracker crashTracker;
 	private SubsystemManager subsystemManager;
-	
-	private PrintStream sendPrintStream;
-	private InfoSendThread sendThread;
 	
 	private DatabaseAndPingThread dnpThread;
 	
-	protected abstract boolean runDashboardNetworking();
 	protected abstract boolean runJetsonNetworking();
 	
 	protected abstract String getProgramName();
@@ -35,13 +24,10 @@ public abstract class TrackingRobot extends IterativeRobot {
 	protected void innerTeleopPeriodic(){}
 	protected void innerDisabledInit(){}
 	protected void innerDisabledPeriodic(){}
+	protected void innerTestInit(){}
+	protected void innerTestPeriodic(){}
 	
 	private Command autoCmd;
-	
-	private void doublePrint(PrintStream ps, String s) {
-		System.out.print(s);
-		ps.print(s);
-	}
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -51,27 +37,17 @@ public abstract class TrackingRobot extends IterativeRobot {
 	public void robotInit() {
 		System.out.println("ROBOT INIT");
 		try {
-			
-			if(runDashboardNetworking()) {
-				dashServer = new UtilityServerSocket(50505);
-				dashServer.connect();
-			}
-			sendPrintStream = new PrintStream( runDashboardNetworking() ? dashServer.getSocket().getOutputStream() : System.out);
-			
 			if(runJetsonNetworking()) {
 				dnpThread = new DatabaseAndPingThread();
 			}
 			
-			crashTracker = new CrashTracker(sendPrintStream);
-			subsystemManager = new SubsystemManager(crashTracker, getTSubsystems());
-			sendThread = new InfoSendThread(sendPrintStream, subsystemManager);
+			subsystemManager = new SubsystemManager(getTSubsystems());
 			
-			doublePrint(sendPrintStream, "Running: " + getProgramName() + "\n");
-			doublePrint(sendPrintStream, "Autonomous: " + getAutonomousCommand().getClass().getSimpleName() + "\n");
-			doublePrint(sendPrintStream, "Dashboard Networking: " + runDashboardNetworking() + ", ");
-			doublePrint(sendPrintStream, "Jetson Networking: " + runJetsonNetworking() + "\n");
-			IntStream.range(0, 44).forEach(e -> doublePrint(sendPrintStream, "*")); //tribute to pramukh naduthota
-			doublePrint(sendPrintStream, "\n");
+			System.out.println("Running: " + getProgramName() + "\n");
+			System.out.println("Autonomous: " + getAutonomousCommand().getClass().getSimpleName() + "\n");
+			System.out.println("Jetson Networking: " + runJetsonNetworking() + "\n");
+			IntStream.range(0, 44).forEach(e -> System.out.println("*")); //tribute to pramukh naduthota
+			System.out.println("\n");
 			
 			innerRobotInit();
 			
@@ -79,16 +55,10 @@ public abstract class TrackingRobot extends IterativeRobot {
 			System.out.println("ERROR IN TRACKINGROBOT STARTUP:\n\t" + e.getStackTrace());
 		}
 		
-		try {
-			crashTracker.logRobotInit();
-			autoCmd = getAutonomousCommand();
-			sendThread.start();
-			dnpThread.start();
-			innerRobotInit();
-		} catch (Throwable t) {
-			crashTracker.logThrowableCrash(t);
-			throw t;
-		}
+		System.out.println("Robot Init");
+		autoCmd = getAutonomousCommand();
+		dnpThread.start();
+		innerRobotInit();
 	}
 	
 	public TrackableSubsystem getSubsystem(Class<? extends TrackableSubsystem> cls) {
@@ -103,47 +73,20 @@ public abstract class TrackingRobot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		System.out.println("DISABLED INIT");
-		try {
-			
-			crashTracker.logDisabledInit();
-			innerDisabledInit();
-			
-		} catch (Throwable t) {
-			
-			crashTracker.logThrowableCrash(t);
-			throw t;
-		}
+		innerDisabledInit();
 	}
 
 	@Override
 	public void disabledPeriodic() {
-		try {
-			
-			Scheduler.getInstance().run();
-			innerDisabledPeriodic();
-			
-		} catch (Throwable t) {
-			
-			crashTracker.logThrowableCrash(t);
-			throw t;	
-		}
+		Scheduler.getInstance().run();
+		innerDisabledPeriodic();
 	}
 
 	@Override
 	public void autonomousInit() {
 		System.out.println("AUTO INIT");
-		try {
-			
-			crashTracker.logAutoInit();
-			innerAutonomousInit();
-			
-			autoCmd.start();
-			
-		} catch (Throwable t) {
-			
-			crashTracker.logThrowableCrash(t);
-			throw t;
-		}
+		innerAutonomousInit();
+		autoCmd.start();
 	}
 
 	/**
@@ -151,31 +94,14 @@ public abstract class TrackingRobot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		try {
-			
-			Scheduler.getInstance().run();
-			innerAutonomousPeriodic();
-			
-		} catch (Throwable t) {
-			
-			crashTracker.logThrowableCrash(t);
-			throw t;
-		}
+		Scheduler.getInstance().run();
+		innerAutonomousPeriodic();
 	}
 
 	@Override
 	public void teleopInit() {
 		System.out.println("TELEOP INIT");
-		try {
-			
-			crashTracker.logTeleopInit();
-			innerTeleopInit();
-			
-		} catch (Throwable t) {
-			
-			crashTracker.logThrowableCrash(t);
-			throw t;
-		}
+		innerTeleopInit();
 	}
 
 	/**
@@ -183,17 +109,14 @@ public abstract class TrackingRobot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		try {
-			
-			Scheduler.getInstance().run();
-			innerTeleopInit();
-			
-		} catch (Throwable t) {
-			
-			crashTracker.logThrowableCrash(t);
-			throw t;
-		}
-
+		Scheduler.getInstance().run();
+		innerTeleopInit();
+	}
+	
+	@Override
+	public void testInit() {
+		System.out.println("TEST INIT");
+		innerTestInit();
 	}
 
 	/**
@@ -201,14 +124,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		try {
-			
-			LiveWindow.run();
-			
-		} catch (Throwable t) {
-			
-			crashTracker.logThrowableCrash(t);
-			throw t;
-		}
+		Scheduler.getInstance().run();
+		innerTestPeriodic();
 	}
 }
