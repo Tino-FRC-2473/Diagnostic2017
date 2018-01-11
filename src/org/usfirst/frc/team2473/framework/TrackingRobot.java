@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 public abstract class TrackingRobot extends IterativeRobot {
-	private SubsystemManager subsystemManager;
+	public static SubsystemManager subs;
 	
 	private DatabaseAndPingThread dnpThread;
 	
@@ -41,7 +41,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 				dnpThread = new DatabaseAndPingThread();
 			}
 			
-			subsystemManager = new SubsystemManager(getTSubsystems());
+			subs = new SubsystemManager(getTSubsystems());
 			
 			System.out.println("Running: " + getProgramName() + "\n");
 			System.out.println("Autonomous: " + getAutonomousCommand().getClass().getSimpleName() + "\n");
@@ -62,7 +62,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 	}
 	
 	public TrackableSubsystem getSubsystem(Class<? extends TrackableSubsystem> cls) {
-		return subsystemManager.getSubsystem(cls);
+		return subs.getSubsystem(cls);
 	}
 	
 	/**
@@ -86,7 +86,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 	public void autonomousInit() {
 		System.out.println("AUTO INIT");
 		innerAutonomousInit();
-		autoCmd.start();
+		if (autoCmd != null) {autoCmd.start();}
 	}
 
 	/**

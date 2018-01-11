@@ -37,7 +37,11 @@ public class Robot extends TrackingRobot {
 	
 	@Override protected void innerRobotInit(){}
 	@Override protected void innerAutonomousInit(){}
-	@Override protected void innerAutonomousPeriodic(){}
+	
+	@Override protected void innerAutonomousPeriodic() {
+		subs.logCurrentState();
+	}
+	
 	@Override protected void innerTeleopInit(){}
 	@Override protected void innerTeleopPeriodic(){}
 	@Override protected void innerDisabledInit(){}

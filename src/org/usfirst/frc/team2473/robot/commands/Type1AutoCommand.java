@@ -2,8 +2,8 @@ package org.usfirst.frc.team2473.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+import org.usfirst.frc.team2473.robot.Robot;
 import org.usfirst.frc.team2473.robot.subsystems.MotorSubsystem;
-import org.usfirst.frc.team2473.test.Instances;
 
 /**
  *
@@ -12,7 +12,7 @@ public class Type1AutoCommand extends Command {
 	private MotorSubsystem sub;
 	
 	public Type1AutoCommand() {
-		sub = (MotorSubsystem)Instances.getInstanceOf(MotorSubsystem.class);
+		sub = (MotorSubsystem) Robot.subs.getSubsystem(MotorSubsystem.class);
 		requires(sub);
 	}
 
