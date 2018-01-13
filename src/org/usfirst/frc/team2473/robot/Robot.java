@@ -16,7 +16,7 @@ import org.usfirst.frc.team2473.robot.subsystems.MotorSubsystem;
  * directory.
  */
 public class Robot extends TrackingRobot {
-	@Override protected boolean runJetsonNetworking()		{	return false;	}
+	@Override protected boolean runJetsonNetworking() { return false; }
 	
 	@Override
 	protected String getProgramName() {
@@ -26,7 +26,7 @@ public class Robot extends TrackingRobot {
 	@Override
 	protected TrackableSubsystem[] getTSubsystems() {
 		return new TrackableSubsystem[] {
-				new MotorSubsystem()
+				new MotorSubsystem(0.5)
 		};
 	}
 	
@@ -39,7 +39,7 @@ public class Robot extends TrackingRobot {
 	@Override protected void innerAutonomousInit(){}
 	
 	@Override protected void innerAutonomousPeriodic() {
-		subs.logCurrentState();
+		Robot.subs.logCurrentState();
 	}
 	
 	@Override protected void innerTeleopInit(){}

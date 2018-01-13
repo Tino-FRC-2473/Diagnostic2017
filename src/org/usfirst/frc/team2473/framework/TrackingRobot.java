@@ -3,11 +3,11 @@ package org.usfirst.frc.team2473.framework;
 
 import java.util.stream.IntStream;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
-public abstract class TrackingRobot extends IterativeRobot {
+public abstract class TrackingRobot extends TimedRobot {
 	public static SubsystemManager subs;
 	
 	private DatabaseAndPingThread dnpThread;
@@ -35,7 +35,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		System.out.println("ROBOT INIT");
+		System.out.println("[diag] robot init - arch setup");
 		try {
 			if(runJetsonNetworking()) {
 				dnpThread = new DatabaseAndPingThread();
@@ -43,10 +43,10 @@ public abstract class TrackingRobot extends IterativeRobot {
 			
 			subs = new SubsystemManager(getTSubsystems());
 			
-			System.out.println("Running: " + getProgramName() + "\n");
-			System.out.println("Autonomous: " + getAutonomousCommand().getClass().getSimpleName() + "\n");
-			System.out.println("Jetson Networking: " + runJetsonNetworking() + "\n");
-			IntStream.range(0, 44).forEach(e -> System.out.println("*")); //tribute to pramukh naduthota
+			System.out.println("Running: " + getProgramName());
+			System.out.println("Autonomous: " + getAutonomousCommand().getClass().getSimpleName());
+			System.out.println("Jetson Networking: " + runJetsonNetworking());
+			IntStream.range(0, 44).forEach(e -> System.out.print("*")); //tribute to pramukh naduthota
 			System.out.println("\n");
 			
 			innerRobotInit();
@@ -55,9 +55,9 @@ public abstract class TrackingRobot extends IterativeRobot {
 			System.out.println("ERROR IN TRACKINGROBOT STARTUP:\n\t" + e.getStackTrace());
 		}
 		
-		System.out.println("Robot Init");
+		System.out.println("[diag] robot init - after arch setup");
 		autoCmd = getAutonomousCommand();
-		dnpThread.start();
+		if(dnpThread != null) dnpThread.start();
 		innerRobotInit();
 	}
 	
@@ -72,7 +72,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		System.out.println("DISABLED INIT");
+		System.out.println("[diag] disabled init");
 		innerDisabledInit();
 	}
 
@@ -84,7 +84,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		System.out.println("AUTO INIT");
+		System.out.println("[diag] auto init");
 		innerAutonomousInit();
 		if (autoCmd != null) {autoCmd.start();}
 	}
@@ -100,7 +100,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		System.out.println("TELEOP INIT");
+		System.out.println("[diag] teleop init");
 		innerTeleopInit();
 	}
 
@@ -115,7 +115,7 @@ public abstract class TrackingRobot extends IterativeRobot {
 	
 	@Override
 	public void testInit() {
-		System.out.println("TEST INIT");
+		System.out.println("[diag] test init");
 		innerTestInit();
 	}
 
