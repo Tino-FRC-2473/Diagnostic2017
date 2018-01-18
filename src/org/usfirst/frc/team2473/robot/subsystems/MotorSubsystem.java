@@ -11,25 +11,21 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
  */
 public class MotorSubsystem extends TrackableSubsystem {
 	private TalonSRX talon1;
-	private double power;
 	
-	public MotorSubsystem(double p) {
+	public MotorSubsystem() {
 		talon1 = Devices.getInstance().getTalon(2);
-		//talon2.follow(talon1);
-		power = p;
 	}
 
 	public void initDefaultCommand() {
 	}
 	
-	public void run() {
-		talon1.set(ControlMode.PercentOutput, power);
+	public void run(double p) {
+		talon1.set(ControlMode.PercentOutput, p);
 	}
 
 	@Override
 	public void stop() {
 		talon1.set(ControlMode.PercentOutput, 0);
-		
 	}
 
 	@Override

@@ -18,14 +18,12 @@ public class DatabaseAndPingThread extends Thread {
 	
 	private final boolean DEBUG = true;
 	
-	private static final String IP = "10.19.48.81"; //fuhsd_guests
-	
 	/**
 	 * Creates a SocketPingThread.
 	 * @throws IOException If an I/O error occurs when creating the socket
 	 */
-	public DatabaseAndPingThread() throws IOException {
-		uSocket = new UtilitySocket(IP, 50007);
+	public DatabaseAndPingThread(String ip, int port) throws IOException {
+		uSocket = new UtilitySocket(ip, port);
 		System.out.println("connected to server");
 		alive = true;
 	}
