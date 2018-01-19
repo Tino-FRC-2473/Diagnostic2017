@@ -12,7 +12,7 @@ public class Type1AutoCommand extends Command {
 	private MotorSubsystem sub;
 	
 	public Type1AutoCommand() {
-		sub = (MotorSubsystem) Robot.subs.getSubsystem(MotorSubsystem.class);
+		sub = (MotorSubsystem) Robot.getSubsystem(MotorSubsystem.class);
 		requires(sub);
 	}
 
@@ -24,7 +24,7 @@ public class Type1AutoCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		sub.run();
+		sub.run(0.5);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -43,5 +43,6 @@ public class Type1AutoCommand extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		end();
 	}
 }
