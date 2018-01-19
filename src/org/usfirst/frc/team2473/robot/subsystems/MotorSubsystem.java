@@ -4,13 +4,13 @@ import org.usfirst.frc.team2473.framework.Devices;
 import org.usfirst.frc.team2473.framework.TrackableSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
  *
  */
 public class MotorSubsystem extends TrackableSubsystem {
-	private TalonSRX talon1;
+	private WPI_TalonSRX talon1;
 	
 	public MotorSubsystem() {
 		talon1 = Devices.getInstance().getTalon(2);

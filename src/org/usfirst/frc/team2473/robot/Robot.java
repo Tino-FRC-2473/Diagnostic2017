@@ -18,7 +18,10 @@ import org.usfirst.frc.team2473.robot.subsystems.MotorSubsystem;
  * project.
  */
 public class Robot extends TrackingRobot {
-	@Override protected Thread jetsonThread() throws IOException { return new DatabaseAndPingThread("10.24.73.56", 50007); }
+	@Override protected Thread jetsonThread() throws IOException { 
+		return null;
+		//return new DatabaseAndPingThread("10.24.73.56", 50007);
+	}
 	
 	@Override
 	protected String getProgramName() {

@@ -104,12 +104,13 @@ public abstract class TrackingRobot extends TimedRobot {
 			System.out.println("Autonomous: " + ((autoCmd==null) ? "None" : getAutonomousCommand().getClass().getSimpleName()));
 			System.out.println("Jetson Networking: " + (jetsonThread != null));
 			IntStream.range(0, 44).forEach(e -> System.out.print("*")); //tribute to pramukh naduthota
-			System.out.println("\n");
+			System.out.println("");
 			
 			if(jetsonThread != null) jetsonThread.start();
 			
 		} catch (Exception e) {
-			System.out.println("ERROR IN TRACKINGROBOT STARTUP:\n\t" + e.getStackTrace());
+			System.out.println("ERROR IN TRACKINGROBOT STARTUP");
+			e.printStackTrace();
 		}
 		
 		innerRobotInit();
